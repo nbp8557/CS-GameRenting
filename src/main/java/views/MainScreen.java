@@ -98,7 +98,8 @@ public class MainScreen extends JPanel implements ActionListener
 	}
 	private void startManage()
 	{
-		
+		ManageGameConsole mbrl = new ManageGameConsole();
+		mbrl.createAndShowGUI();
 	}
 	private static void createAndShowGUI() {
 

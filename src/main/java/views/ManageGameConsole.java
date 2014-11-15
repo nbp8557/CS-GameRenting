@@ -314,7 +314,7 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 		ConsoleRegistration rgst = new ConsoleRegistration();
 		rgst.createAndShowGUI(str);
 	}
-	private static void createAndShowGUI() {
+	static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("TabbedPaneDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
