@@ -3,6 +3,7 @@ package views;
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,54 +17,53 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 
-public class Registration extends JPanel implements ActionListener 
+public class GameRegistration extends JPanel implements ActionListener, ItemListener 
 {
 	protected JButton buttonSubmit, buttonCancel;
-	JLabel labelRITusername, labelFirst, labelMiddle, labelLast, labelEmail, labelPhone, labelPosition;
-	JTextField fieldRITusername, fieldFirst, fieldMiddle, fieldLast, fieldEmail, fieldPhone, fieldPosition;
-	static JFrame frame;
-	static String strRITusername;
-	static String strFirst;
-	static String strMiddle;
-	static String strLast;
-	static String strEmail;
-	static String strPhone;
-	static String strPosition;
-	static String strKey;
+	static JLabel labelName;
+	static JLabel labelRentable;
+	static JLabel labelConsole;
 	
-	public Registration() 
+	static String strName;
+	static String strRentable;
+	static String strConsole;
+	
+	static JFrame frame;
+	
+	String[] strsConsoles;
+	
+	JTextField fieldName;
+	
+	JCheckBox checkRentable;
+	
+	boolean boolRentable;
+	
+	JComboBox listConsoles;
+	
+	public GameRegistration() 
 	{
 		super(new GridBagLayout());
-		labelRITusername 	= new JLabel("RIT username");
-		labelFirst 			= new JLabel("First name");
-		labelMiddle 		= new JLabel("Middle name");
-		labelLast 			= new JLabel("Last name");
-		labelEmail 			= new JLabel("Email");
-		labelPhone 			= new JLabel("Phone Number");
-		labelPosition 		= new JLabel("Position");
 		
-		fieldRITusername = new JTextField(8);
-		fieldRITusername.setText(strRITusername);
+		labelName 		= new JLabel("Name");
+		labelRentable 	= new JLabel("Rentable");
+		labelConsole 	= new JLabel("Console");
 		
-		fieldFirst = new JTextField(64);
-		fieldFirst.setText(strFirst);
+		fieldName = new JTextField(64);
+		fieldName.setText(strName);
 		
-		fieldMiddle = new JTextField(64);
-		fieldMiddle.setText(strMiddle);
+		setStringArray();
 		
-		fieldLast = new JTextField(64);
-		fieldLast.setText(strLast);
+		listConsoles = new JComboBox(strsConsoles);
+		listConsoles.addActionListener(this);
+		listConsoles.setPreferredSize(new Dimension(253,30));
 		
-		fieldEmail = new JTextField(128);
-		fieldEmail.setText(strEmail);
-		
-		fieldPhone = new JTextField(11);
-		fieldPhone.setText(strPhone);
-		
-		fieldPosition = new JTextField(64);
-		fieldPosition.setText(strPosition);
+		checkRentable = new JCheckBox("     ");
+		checkRentable.setSelected(true);
+		checkRentable.addItemListener(this);
 		
 		buttonSubmit = new JButton("Submit/Update");
 		buttonSubmit.setVerticalTextPosition(AbstractButton.CENTER);
@@ -80,49 +80,36 @@ public class Registration extends JPanel implements ActionListener
 		buttonCancel.addActionListener(this);
 		
 		JPanel textPane = new JPanel();
-		//textPane.setLayout(new BoxLayout(textPane,
-        //        BoxLayout.LINE_AXIS));
-		
 		textPane.setPreferredSize(new Dimension(190,395));
 		
 		JPanel inputPane = new JPanel();
-		//inputPane.setLayout(new BoxLayout(inputPane,
-        //        BoxLayout.LINE_AXIS));
 		inputPane.setPreferredSize(new Dimension(190,395));
 		
 		GridBagConstraints c = new GridBagConstraints();
-        c.gridwidth = GridBagConstraints.REMAINDER;
-
+		c.gridwidth = GridBagConstraints.REMAINDER;
         c.fill = GridBagConstraints.HORIZONTAL;
+        
+        add(labelName);
+		add(fieldName,c);
 		
-		add(labelRITusername);
-		add(fieldRITusername,c);
-
-		add(labelFirst);
-		add(fieldFirst,c);
-
-		add(labelMiddle);
-		add(fieldMiddle,c);
-
-		add(labelLast);
-		add(fieldLast,c);
-
-		add(labelEmail);
-		add(fieldEmail,c);
-
-		add(labelPhone);
-		add(fieldPhone,c);
-
-		add(labelPosition);
-		add(fieldPosition,c);
-
+		add(labelRentable);
+		add(checkRentable,c);
+		
+		add(labelConsole);
+		add(listConsoles,c);
 		add(textPane);
 		add(inputPane);
 		add(buttonSubmit);
-		add(buttonCancel);
-
-		//fieldRITusername.addActionListener(textListener);
-		//fieldRITusername.getDocument().addDocumentListener(textListener);
+		add(buttonCancel,c);
+	}
+	public void itemStateChanged(ItemEvent e) {
+		if (e.getStateChange() == ItemEvent.DESELECTED) {
+            boolRentable = false;
+        }
+		else
+		{
+			boolRentable = true;
+		}
 	}
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -130,21 +117,11 @@ public class Registration extends JPanel implements ActionListener
 		{
 			System.out.println("Submit:");
 			
-			if(!fieldRITusername.getText().equals("")
-					&& !fieldFirst.getText().equals("")
-					&& !fieldMiddle.getText().equals("")
-					&& !fieldLast.getText().equals("")
-					&& !fieldEmail.getText().equals("")
-					&& !fieldPhone.getText().equals("")
-					&& !fieldPosition.getText().equals(""))
+			if(!fieldName.getText().equals(""))
 			{
-				System.out.println(fieldRITusername.getText());
-				System.out.println(fieldFirst.getText());
-				System.out.println(fieldMiddle.getText());
-				System.out.println(fieldLast.getText());
-				System.out.println(fieldEmail.getText());
-				System.out.println(fieldPhone.getText());
-				System.out.println(fieldPosition.getText());
+				System.out.println(fieldName.getText());
+				System.out.println(""+boolRentable);
+				System.out.println(listConsoles.getSelectedItem().toString());
 				/*
 				 * do database work here
 				 */
@@ -160,6 +137,11 @@ public class Registration extends JPanel implements ActionListener
 			frame.dispose();
 		}
 	}
+	public void setStringArray()
+	{
+		String[] tempConsoles = { "console1", "console2" };
+		strsConsoles = tempConsoles;
+	}
 	private static boolean retrieveEditInformation(String str)
 	{
 		if(str != null && !str.isEmpty() && !str.equals(""))
@@ -168,13 +150,7 @@ public class Registration extends JPanel implements ActionListener
 			 * 	the string that goes here is the key that it will use
 			 * 	to populate the textfields
 			 */
-			strRITusername = "random";
-			strFirst = "info";
-			strMiddle = "here";
-			strLast = "to";
-			strEmail = "test";
-			strPhone = "this";
-			strPosition = "thing";
+			strName = "random";
 			
 			return true;
 		}
@@ -182,6 +158,7 @@ public class Registration extends JPanel implements ActionListener
 		
 		return false;
 	}
+	
 	public static void createAndShowGUI(String str) {
 
         //Create and set up the window.
@@ -190,9 +167,9 @@ public class Registration extends JPanel implements ActionListener
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         //Create and set up the content pane.
-        Registration newContentPane = new Registration();
+        GameRegistration newContentPane = new GameRegistration();
         newContentPane.setOpaque(true); //content panes must be opaque
-        newContentPane.setPreferredSize(new Dimension(300,200));
+        newContentPane.setPreferredSize(new Dimension(300,100));
         frame.setContentPane(newContentPane);
 
         //Display the window.

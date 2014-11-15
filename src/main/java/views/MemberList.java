@@ -73,8 +73,6 @@ implements ListSelectionListener {
                      }
                  }
             }
-           
-
             int size = listModel.getSize();
 
             if (size == 0) { //Nobody's left, disable firing.
@@ -96,7 +94,9 @@ implements ListSelectionListener {
     		//deleteButton.setEnabled(false);
             //editButton.setEnabled(false);
             //addButton.setEnabled(false);
-    		startRegistration("key");
+    		int index = list.getSelectedIndex();
+    		
+    		startRegistration(listModel.getElementAt(index).toString());
             /*
              * open and wait for edit/add window
              */

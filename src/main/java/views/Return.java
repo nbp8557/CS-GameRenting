@@ -22,7 +22,8 @@ public class Return extends JPanel implements ActionListener
 	String[] strsGames;
 	
 	static JFrame frame;
-	
+	JComboBox listMembers;
+	JComboBox listGames;
 	public Return() 
 	{
 		labelMember 		= new JLabel("Member");
@@ -44,10 +45,10 @@ public class Return extends JPanel implements ActionListener
 		
 		setStringArrays();
 		
-		JComboBox listMembers = new JComboBox(strsMembers);
+		listMembers = new JComboBox(strsMembers);
 		listMembers.addActionListener(this);
 		listMembers.setPreferredSize(new Dimension(340,30));
-		JComboBox listGames = new JComboBox(strsGames);
+		listGames = new JComboBox(strsGames);
 		listGames.addActionListener(this);
 		listGames.setPreferredSize(new Dimension(353,30));
 		
