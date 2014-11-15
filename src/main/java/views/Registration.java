@@ -24,7 +24,13 @@ public class Registration extends JPanel implements ActionListener
 	JLabel labelRITusername, labelFirst, labelMiddle, labelLast, labelEmail, labelPhone, labelPosition;
 	JTextField fieldRITusername, fieldFirst, fieldMiddle, fieldLast, fieldEmail, fieldPhone, fieldPosition;
 	static JFrame frame;
-	String strRITusername, strFirst, strMiddle, strLast, strEmail, strPhone, strPosition;
+	static String strRITusername;
+	static String strFirst;
+	static String strMiddle;
+	static String strLast;
+	static String strEmail;
+	static String strPhone;
+	static String strPosition;
 	static String strKey;
 	
 	public Registration() 
@@ -37,7 +43,6 @@ public class Registration extends JPanel implements ActionListener
 		labelEmail 			= new JLabel("Email");
 		labelPhone 			= new JLabel("Phone Number");
 		labelPosition 		= new JLabel("Position");
-		retrieveEditInformation();
 		
 		fieldRITusername = new JTextField(8);
 		fieldRITusername.setText(strRITusername);
@@ -155,9 +160,9 @@ public class Registration extends JPanel implements ActionListener
 			frame.dispose();
 		}
 	}
-	private boolean retrieveEditInformation()
+	private static boolean retrieveEditInformation(String str)
 	{
-		if(!strKey.equals(""))
+		if(str != null && !str.isEmpty())
 		{
 			/*
 			 * 	the string that goes here is the key that it will use
@@ -177,9 +182,10 @@ public class Registration extends JPanel implements ActionListener
 		
 		return false;
 	}
-	private static void createAndShowGUI() {
+	public static void createAndShowGUI(String str) {
 
         //Create and set up the window.
+		retrieveEditInformation(str);
         frame = new JFrame("Registration Screen");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -196,18 +202,9 @@ public class Registration extends JPanel implements ActionListener
 	public static void main(String[] args) {
         //Schedule a job for the event-dispatching thread:
         //creating and showing this application's GUI.
-		strKey = "";
-		if(args.length == 1)
-		{
-			//we got a key to edit with
-			//System.out.println(args[0]);
-			strKey = args[0];
-		}
-		//System.out.println(args.length);
-		
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI(); 
+                createAndShowGUI(""); 
             }
         });
     }

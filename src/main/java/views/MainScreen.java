@@ -63,21 +63,43 @@ public class MainScreen extends JPanel implements ActionListener
 		if ("Renting".equals(e.getActionCommand())) 
 		{
 			System.out.println("Renting");
+			startRenting();
 		}
 		else if ("Return".equals(e.getActionCommand())) 
 		{
 			System.out.println("Return");
+			startReturn();
 		}
 		else if ("List".equals(e.getActionCommand())) 
 		{
 			System.out.println("List");
+			startMemberList();
 		}
 		else if ("Alter".equals(e.getActionCommand())) 
 		{
 			System.out.println("Alter");
+			startManage();
 		}
 	}
-	
+	private void startRenting()
+	{
+		 Renting rnt = new Renting();
+		 rnt.createAndShowGUI();
+	}
+	private void startReturn()
+	{
+		Return rtn = new Return();
+		rtn.createAndShowGUI();
+	}
+	private void startMemberList()
+	{
+		MemberList mbrl = new MemberList();
+		mbrl.createAndShowGUI();
+	}
+	private void startManage()
+	{
+		
+	}
 	private static void createAndShowGUI() {
 
         //Create and set up the window.

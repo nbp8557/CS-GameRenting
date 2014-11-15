@@ -2,6 +2,7 @@ package views;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 import javax.swing.event.*;
 
@@ -92,10 +93,10 @@ implements ListSelectionListener {
     }
     class EditListener implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
-    		deleteButton.setEnabled(false);
-            editButton.setEnabled(false);
-            addButton.setEnabled(false);
-            
+    		//deleteButton.setEnabled(false);
+            //editButton.setEnabled(false);
+            //addButton.setEnabled(false);
+    		startRegistration("key");
             /*
              * open and wait for edit/add window
              */
@@ -103,10 +104,10 @@ implements ListSelectionListener {
     }
     class AddListener implements ActionListener {
     	public void actionPerformed(ActionEvent e) {
-    		deleteButton.setEnabled(false);
-            editButton.setEnabled(false);
-            addButton.setEnabled(false);
-            
+    		//deleteButton.setEnabled(false);
+            //editButton.setEnabled(false);
+            //addButton.setEnabled(false);
+    		startRegistration("");
             /*
              * open and wait for edit/add window
              */
@@ -134,7 +135,12 @@ implements ListSelectionListener {
             }
         }
     }
-    private static void createAndShowGUI() {
+    private void startRegistration(String str)
+	{
+		Registration rgst = new Registration();
+		rgst.createAndShowGUI(str);
+	}
+    public static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("MemberList");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

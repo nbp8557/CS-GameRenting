@@ -95,7 +95,7 @@ public class Return extends JPanel implements ActionListener
 	        System.out.println(slct);
 		}
 	}
-	private static void createAndShowGUI() {
+	public static void createAndShowGUI() {
 
         //Create and set up the window.
         frame = new JFrame("Return Screen");
