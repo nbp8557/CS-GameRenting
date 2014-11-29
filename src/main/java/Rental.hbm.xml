@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+ "-//Hibernate/Hibernate Mapping DTD//EN"
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name="entities.Rental" table="Rental">
+      <meta attribute="class-description">
+         This class contains the Rental detail. 
+      </meta>
+
+      <property name="RentalTimestamp" column="RentalTimestamp" type="date"/>
+      <property name="ReturnTimestamp" column="ReturnTimestamp" type="date"/>
+      <property name="GameID" column="GameID" type="int"/>
+      <property name="EboardID" column="EboardID" type="int"/>   
+      <property name="RentorID" column="RentorID" type="int"/>      
+   </class>
+</hibernate-mapping>
