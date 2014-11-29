@@ -1,69 +1,67 @@
 package entities;
-
 import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
- * The persistent class for the User database table.
+ * The persistent class for the Person database table.
  * 
  */
 @Entity
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
+@NamedQuery(name="Person.findAll", query="SELECT p FROM Person p")
 public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer userId;
-	
-	private String userName;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private String RITUsername;
+
+	private String eboardPosition;
+
+	private String email;
 
 	private String firstName;
 
 	private String lastName;
 
-	private String password;
-
-	private String passwordSalt;
+	private String middleName;
 
 	private String phoneNumber;
 
-	private int userType;
+	//bi-directional many-to-one association to Rental
+	@OneToMany(mappedBy="person1")
+	private List<Rental> rentals1;
 
-	//bi-directional many-to-one association to RideEntry
-	@OneToMany(targetEntity= Vehicle.class ,mappedBy="user", fetch = FetchType.EAGER)
-	private List<Vehicle> vehicles;
-	
-	public Person(){}
-	public Person(String userName, String firstName,
-			String lastName, String password, String passwordSalt,
-			String phoneNumber, int userType) {
-		super();
-		this.userName = userName;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.password = password;
-		this.passwordSalt = passwordSalt;
-		this.phoneNumber = phoneNumber;
-		this.userType = userType;
+	//bi-directional many-to-one association to Rental
+	@OneToMany(mappedBy="person2")
+	private List<Rental> rentals2;
+
+	public Person() {
 	}
 
-	public Integer getUserId() {
-		return this.userId;
+	public String getRITUsername() {
+		return this.RITUsername;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setRITUsername(String RITUsername) {
+		this.RITUsername = RITUsername;
 	}
 
-	public String getUserName() {
-		return this.userName;
+	public String getEboardPosition() {
+		return this.eboardPosition;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setEboardPosition(String eboardPosition) {
+		this.eboardPosition = eboardPosition;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getFirstName() {
@@ -82,20 +80,12 @@ public class Person implements Serializable {
 		this.lastName = lastName;
 	}
 
-	public String getPassword() {
-		return this.password;
+	public String getMiddleName() {
+		return this.middleName;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPasswordSalt() {
-		return this.passwordSalt;
-	}
-
-	public void setPasswordSalt(String passwordSalt) {
-		this.passwordSalt = passwordSalt;
+	public void setMiddleName(String middleName) {
+		this.middleName = middleName;
 	}
 
 	public String getPhoneNumber() {
@@ -106,34 +96,48 @@ public class Person implements Serializable {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public int getUserType() {
-		return this.userType;
+	public List<Rental> getRentals1() {
+		return this.rentals1;
 	}
 
-	public void setUserType(int userType) {
-		this.userType = userType;
-	}
-	
-	public List<Vehicle> getVehicles() {
-		return this.vehicles;
+	public void setRentals1(List<Rental> rentals1) {
+		this.rentals1 = rentals1;
 	}
 
-	public void setVehicles(List<Vehicle> vehicles) {
-		this.vehicles = vehicles;
+	public Rental addRentals1(Rental rentals1) {
+		getRentals1().add(rentals1);
+		rentals1.setPerson1(this);
+
+		return rentals1;
 	}
 
-	public Vehicle addVehicle(Vehicle vehicle) {
-		getVehicles().add(vehicle);
-		vehicle.setUser(this);
+	public Rental removeRentals1(Rental rentals1) {
+		getRentals1().remove(rentals1);
+		rentals1.setPerson1(null);
 
-		return vehicle;
+		return rentals1;
 	}
 
-	public Vehicle removeVehicle(Vehicle vehicle) {
-		getVehicles().remove(vehicle);
-		vehicle.setUser(null);
+	public List<Rental> getRentals2() {
+		return this.rentals2;
+	}
 
-		return vehicle;
+	public void setRentals2(List<Rental> rentals2) {
+		this.rentals2 = rentals2;
+	}
+
+	public Rental addRentals2(Rental rentals2) {
+		getRentals2().add(rentals2);
+		rentals2.setPerson2(this);
+
+		return rentals2;
+	}
+
+	public Rental removeRentals2(Rental rentals2) {
+		getRentals2().remove(rentals2);
+		rentals2.setPerson2(null);
+
+		return rentals2;
 	}
 
 }

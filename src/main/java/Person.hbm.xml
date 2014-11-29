@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC 
  "-//Hibernate/Hibernate Mapping DTD//EN"
- "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+ "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-   <class name="entities.Person" table="Person">
-      <meta attribute="class-description">
-         This class contains the person detail. 
-      </meta>
-      
-      <id name="RITUsername" type="int" column="RITUsername">
-         <generator class="native"/>
-      </id>
+	<class name="entities.Person" table="Person">
+		<meta attribute="class-description">
+			This class contains the person detail.
+		</meta>
 
-      <property name="FirstName" column="FirstName" type="string"/>
-      <property name="MiddleName" column="MiddleName" type="string"/>
-      <property name="LastName" column="LastName" type="string"/>
-      <property name="Email" column="LastName" type="string"/>
-      <property name="PhoneNumber" column="PhoneNumber" type="string"/>
-      <property name="EboardPosition" column="EboardPosition" type="string"/>
-      
-   </class>
+		<id name="RITUsername" type="int" column="RITUsername">
+			<generator class="native" />
+		</id>
+
+		<property name="FirstName" column="FirstName" type="string" />
+		<property name="MiddleName" column="MiddleName" type="string" />
+		<property name="LastName" column="LastName" type="string" />
+		<property name="Email" column="LastName" type="string" />
+		<property name="PhoneNumber" column="PhoneNumber" type="string" />
+		<property name="EboardPosition" column="EboardPosition" type="string" />
+
+	</class>
 </hibernate-mapping>
