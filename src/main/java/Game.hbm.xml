@@ -9,7 +9,7 @@
 			This class contains the person detail.
 		</meta>
 
-		<id name="RITUsername" type="int" column="RITUsername">
+		<id name="GameID" type="int" column="GameID">
 			<generator class="native" />
 		</id>
 

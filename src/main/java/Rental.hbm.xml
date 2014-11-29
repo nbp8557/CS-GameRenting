@@ -9,6 +9,10 @@
          This class contains the Rental detail. 
       </meta>
 
+	  <id name="RentalID" type="int" column="RentalID">
+			<generator class="native" />
+		</id>
+
       <property name="RentalTimestamp" column="RentalTimestamp" type="date"/>
       <property name="ReturnTimestamp" column="ReturnTimestamp" type="date"/>
       <property name="GameID" column="GameID" type="int"/>

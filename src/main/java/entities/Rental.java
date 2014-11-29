@@ -1,7 +1,9 @@
 package entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -14,6 +16,10 @@ import java.util.Date;
 public class Rental implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int RentalID;
+	
 	@Temporal(TemporalType.DATE)
 	private Date rentalTimestamp;
 
@@ -38,6 +44,15 @@ public class Rental implements Serializable {
 	public Rental() {
 	}
 
+	public int getRentalID() {
+		return this.RentalID;
+	}
+
+	public void setGameID(int rentalID) {
+		this.RentalID = rentalID;
+	}
+	
+	
 	public Date getRentalTimestamp() {
 		return this.rentalTimestamp;
 	}
