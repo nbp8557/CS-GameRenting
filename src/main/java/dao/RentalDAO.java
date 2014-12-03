@@ -11,10 +11,15 @@ import entities.Rental;
 
 public class RentalDAO extends CRUDManager<Rental, Integer> {
 
+	public Session s;
+	
+	public RentalDAO(Session session){
+		this.s = session;
+	}
+	
+	
 	@Override
 	public Rental insert(Rental g) {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		Session s = factory.getSession();
 		Transaction t = s.beginTransaction();
 		s.save(g);
 		t.commit();
@@ -26,8 +31,6 @@ public class RentalDAO extends CRUDManager<Rental, Integer> {
 
 	@Override
 	public Rental select(Integer pk) {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		Session s = factory.getSession();
 		Rental u = (Rental) s.get(Rental.class, pk);
 		s.close();
 		return u;
@@ -36,8 +39,6 @@ public class RentalDAO extends CRUDManager<Rental, Integer> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Rental> selectAll() {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		Session s = factory.getSession();
 		List<Rental> u = new ArrayList<Rental>();
 		u = s.createCriteria(Rental.class).list();
 		s.close();
@@ -46,8 +47,6 @@ public class RentalDAO extends CRUDManager<Rental, Integer> {
 
 	@Override
 	public Rental delete(Rental rental) {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		Session s = factory.getSession();
 		Transaction transaction = s.beginTransaction();
 		s.delete(rental);
 		transaction.commit();
@@ -59,9 +58,6 @@ public class RentalDAO extends CRUDManager<Rental, Integer> {
 
 	@Override
 	public Rental update(Rental rental) {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		
-		Session s = factory.getSession();
 		Transaction transaction = s.beginTransaction();
 		s.update(rental);
 		transaction.commit();

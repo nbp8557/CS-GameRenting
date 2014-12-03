@@ -11,10 +11,15 @@ import entities.Console;
 
 public class ConsoleDAO extends CRUDManager<Console, Integer> {
 
+	public Session s;
+	
+	public ConsoleDAO(Session session){
+		this.s = session;
+	}
+	
+	
 	@Override
 	public Console insert(Console u) {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		Session s = factory.getSession();
 		Transaction t = s.beginTransaction();
 		s.save(u);
 		t.commit();
@@ -26,8 +31,6 @@ public class ConsoleDAO extends CRUDManager<Console, Integer> {
 
 	@Override
 	public Console select(Integer pk) {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		Session s = factory.getSession();
 		Console u = (Console) s.get(Console.class, pk);
 		s.close();
 		return u;
@@ -36,8 +39,6 @@ public class ConsoleDAO extends CRUDManager<Console, Integer> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Console> selectAll() {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		Session s = factory.getSession();
 		List<Console> u = new ArrayList<Console>();
 		u = s.createCriteria(Console.class).list();
 		s.close();
@@ -46,8 +47,6 @@ public class ConsoleDAO extends CRUDManager<Console, Integer> {
 
 	@Override
 	public Console delete(Console console) {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		Session s = factory.getSession();
 		Transaction transaction = s.beginTransaction();
 		s.delete(console);
 		transaction.commit();
@@ -59,9 +58,6 @@ public class ConsoleDAO extends CRUDManager<Console, Integer> {
 
 	@Override
 	public Console update(Console console) {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		
-		Session s = factory.getSession();
 		Transaction transaction = s.beginTransaction();
 		s.update(console);
 		transaction.commit();
