@@ -1,9 +1,12 @@
 package manager;
 
+import java.util.List;
+
 import dao.GameDAO;
 import dao.SessionFactory;
 import entities.Console;
 import entities.Game;
+import entities.Person;
 
 public class GameManager {
 
@@ -38,8 +41,24 @@ public class GameManager {
 		return gameDAO.update(game);
 	}
 	
+	
+	public void deleteGame(int gameID)
+	{
+		Game game = gameDAO.select(gameID);
+		
+		gameDAO.delete(game);
+	}
+	
 	public Game selectGame(Integer gameID){
 		return gameDAO.select(gameID);				
 	}
+	
+	public List<Game> listGames(){
+		List<Game> games = gameDAO.selectAll();
+		
+		return games;
+	}
+	
+	
 
 }

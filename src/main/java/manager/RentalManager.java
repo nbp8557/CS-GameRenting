@@ -1,6 +1,7 @@
 package manager;
 
 import java.sql.Date;
+import java.util.List;
 
 import dao.PersonDAO;
 import dao.RentalDAO;
@@ -26,12 +27,24 @@ public class RentalManager {
 		return r;
 	}
 	
-	public Rental updatePerson(Rental rental){
+	public Rental updateRental(Rental rental){
 		return rentalDAO.update(rental);
 	}
 	
-	public Rental selectConsole(int RentalID){
-		return rentalDAO.select(RentalID);
+	public Rental selectRental(int rentalID){
+		return rentalDAO.select(rentalID);
+	}
+	
+	public void deleteRental(int rentalID){
+		Rental r = rentalDAO.select(rentalID);
+		
+		rentalDAO.delete(r);
+	}
+	
+	public List<Rental> listRentals(){
+		List<Rental> rentals = rentalDAO.selectAll();
+		
+		return rentals;
 	}
 	
 }

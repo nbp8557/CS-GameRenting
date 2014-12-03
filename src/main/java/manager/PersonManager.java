@@ -1,5 +1,6 @@
 package manager;
 
+import java.util.List;
 import dao.GameDAO;
 import dao.PersonDAO;
 import dao.SessionFactory;
@@ -33,9 +34,22 @@ public class PersonManager {
 		return personDAO.update(person);
 	}
 	
-	public Person selectConsole(String username){
+	public void deleteRideEntry(String username)
+	{
+		Person person = personDAO.select(username);
+		
+		personDAO.delete(person);
+	}
+	
+	public Person selectPerson(String username){
 		return personDAO.select(username);
 	}
 	
+	public List<Person> listPeople()
+	{
+		List<Person> people = personDAO.selectAll();
+		
+		return people;
+	}
 	
 }

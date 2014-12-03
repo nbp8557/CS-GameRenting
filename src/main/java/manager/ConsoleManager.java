@@ -1,5 +1,7 @@
 package manager;
 
+import java.util.List;
+
 import dao.ConsoleDAO;
 import dao.SessionFactory;
 import entities.Console;
@@ -28,5 +30,17 @@ public class ConsoleManager {
 	
 	public Console selectConsole(Integer consoleID){
 		return consoleDAO.select(consoleID);
+	}
+	
+	public void deleteConsole(Integer consoleID){
+		Console console = consoleDAO.select(consoleID);
+		
+		consoleDAO.delete(console);
+	}
+	
+	public List<Console> listConsoles(){
+		List<Console> consoles = consoleDAO.selectAll();
+		
+		return consoles;		
 	}
 }
