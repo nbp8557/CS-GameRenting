@@ -1,4 +1,3 @@
-
 package views;
 
 import java.awt.*;
@@ -7,225 +6,218 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 /* ListDemo.java requires no other files. */
-public class ListDemo extends JPanel
-                      implements ListSelectionListener {
-    private JList list;
-    private DefaultListModel listModel;
+public class ListDemo extends JPanel implements ListSelectionListener {
+	private JList list;
+	private DefaultListModel listModel;
 
-    private static final String hireString = "Hire";
-    private static final String fireString = "Fire";
-    private JButton fireButton;
-    private JTextField employeeName;
+	private static final String hireString = "Hire";
+	private static final String fireString = "Fire";
+	private JButton fireButton;
+	private JTextField employeeName;
 
-    public ListDemo() {
-        super(new BorderLayout());
+	public ListDemo() {
+		super(new BorderLayout());
 
-        listModel = new DefaultListModel();
-        listModel.addElement("Jane Doe");
-        listModel.addElement("John Smith");
-        listModel.addElement("Kathy Green");
+		listModel = new DefaultListModel();
+		listModel.addElement("Jane Doe");
+		listModel.addElement("John Smith");
+		listModel.addElement("Kathy Green");
 
-        //Create the list and put it in a scroll pane.
-        list = new JList(listModel);
-        list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        
-        list.setSelectedIndex(0);
-        list.addListSelectionListener(this);
-        list.setVisibleRowCount(5);
-        JScrollPane listScrollPane = new JScrollPane(list);
+		// Create the list and put it in a scroll pane.
+		list = new JList(listModel);
+		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        JButton hireButton = new JButton(hireString);
-        HireListener hireListener = new HireListener(hireButton);
-        hireButton.setActionCommand(hireString);
-        hireButton.addActionListener(hireListener);
-        hireButton.setEnabled(false);
+		list.setSelectedIndex(0);
+		list.addListSelectionListener(this);
+		list.setVisibleRowCount(5);
+		JScrollPane listScrollPane = new JScrollPane(list);
 
-        fireButton = new JButton(fireString);
-        fireButton.setActionCommand(fireString);
-        fireButton.addActionListener(new FireListener());
+		JButton hireButton = new JButton(hireString);
+		HireListener hireListener = new HireListener(hireButton);
+		hireButton.setActionCommand(hireString);
+		hireButton.addActionListener(hireListener);
+		hireButton.setEnabled(false);
 
-        employeeName = new JTextField(10);
-        employeeName.addActionListener(hireListener);
-        employeeName.getDocument().addDocumentListener(hireListener);
-        String name = listModel.getElementAt(
-                              list.getSelectedIndex()).toString();
+		fireButton = new JButton(fireString);
+		fireButton.setActionCommand(fireString);
+		fireButton.addActionListener(new FireListener());
 
-        //Create a panel that uses BoxLayout.
-        JPanel buttonPane = new JPanel();
-        buttonPane.setLayout(new BoxLayout(buttonPane,
-                                           BoxLayout.LINE_AXIS));
-        buttonPane.add(fireButton);
-        buttonPane.add(Box.createHorizontalStrut(5));
-        buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
-        buttonPane.add(Box.createHorizontalStrut(5));
-        buttonPane.add(employeeName);
-        buttonPane.add(hireButton);
-        buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		employeeName = new JTextField(10);
+		employeeName.addActionListener(hireListener);
+		employeeName.getDocument().addDocumentListener(hireListener);
+		String name = listModel.getElementAt(list.getSelectedIndex())
+				.toString();
 
-        add(listScrollPane, BorderLayout.CENTER);
-        add(buttonPane, BorderLayout.PAGE_END);
-    }
+		// Create a panel that uses BoxLayout.
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
+		buttonPane.add(fireButton);
+		buttonPane.add(Box.createHorizontalStrut(5));
+		buttonPane.add(new JSeparator(SwingConstants.VERTICAL));
+		buttonPane.add(Box.createHorizontalStrut(5));
+		buttonPane.add(employeeName);
+		buttonPane.add(hireButton);
+		buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-    class FireListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            //This method can be called only if
-            //there's a valid selection
-            //so go ahead and remove whatever's selected.
-            int[] arr = list.getSelectedIndices();
-            int index = list.getSelectedIndex();
-            for(int i = 0; i < arr.length; i++)
-            {
-                 listModel.remove(arr[i]);
-                 for(int k = i; k < arr.length; k++)
-                 {
-                     if(arr[i] < arr[k])
-                     {
-                            arr[k] = arr[k] - 1;
-                     }
-                 }
-            }
-           
+		add(listScrollPane, BorderLayout.CENTER);
+		add(buttonPane, BorderLayout.PAGE_END);
+	}
 
-            int size = listModel.getSize();
+	class FireListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			// This method can be called only if
+			// there's a valid selection
+			// so go ahead and remove whatever's selected.
+			int[] arr = list.getSelectedIndices();
+			int index = list.getSelectedIndex();
+			for (int i = 0; i < arr.length; i++) {
+				listModel.remove(arr[i]);
+				for (int k = i; k < arr.length; k++) {
+					if (arr[i] < arr[k]) {
+						arr[k] = arr[k] - 1;
+					}
+				}
+			}
 
-            if (size == 0) { //Nobody's left, disable firing.
-                fireButton.setEnabled(false);
+			int size = listModel.getSize();
 
-            } else { //Select an index.
-                if (index == listModel.getSize()) {
-                    //removed item in last position
-                    index--;
-                }
+			if (size == 0) { // Nobody's left, disable firing.
+				fireButton.setEnabled(false);
 
-                list.setSelectedIndex(index);
-                list.ensureIndexIsVisible(index);
-            }
-        }
-    }
+			} else { // Select an index.
+				if (index == listModel.getSize()) {
+					// removed item in last position
+					index--;
+				}
 
-    //This listener is shared by the text field and the hire button.
-    class HireListener implements ActionListener, DocumentListener {
-        private boolean alreadyEnabled = false;
-        private JButton button;
+				list.setSelectedIndex(index);
+				list.ensureIndexIsVisible(index);
+			}
+		}
+	}
 
-        public HireListener(JButton button) {
-            this.button = button;
-        }
+	// This listener is shared by the text field and the hire button.
+	class HireListener implements ActionListener, DocumentListener {
+		private boolean alreadyEnabled = false;
+		private JButton button;
 
-        //Required by ActionListener.
-        public void actionPerformed(ActionEvent e) {
-            String name = employeeName.getText();
+		public HireListener(JButton button) {
+			this.button = button;
+		}
 
-            //User didn't type in a unique name...
-            if (name.equals("") || alreadyInList(name)) {
-                Toolkit.getDefaultToolkit().beep();
-                employeeName.requestFocusInWindow();
-                employeeName.selectAll();
-                return;
-            }
+		// Required by ActionListener.
+		public void actionPerformed(ActionEvent e) {
+			String name = employeeName.getText();
 
-            int index = list.getSelectedIndex(); //get selected index
-            if (index == -1) { //no selection, so insert at beginning
-                index = 0;
-            } else {           //add after the selected item
-                index++;
-            }
+			// User didn't type in a unique name...
+			if (name.equals("") || alreadyInList(name)) {
+				Toolkit.getDefaultToolkit().beep();
+				employeeName.requestFocusInWindow();
+				employeeName.selectAll();
+				return;
+			}
 
-            listModel.insertElementAt(employeeName.getText(), index);
-            //If we just wanted to add to the end, we'd do this:
-            //listModel.addElement(employeeName.getText());
+			int index = list.getSelectedIndex(); // get selected index
+			if (index == -1) { // no selection, so insert at beginning
+				index = 0;
+			} else { // add after the selected item
+				index++;
+			}
 
-            //Reset the text field.
-            employeeName.requestFocusInWindow();
-            employeeName.setText("");
+			listModel.insertElementAt(employeeName.getText(), index);
+			// If we just wanted to add to the end, we'd do this:
+			// listModel.addElement(employeeName.getText());
 
-            //Select the new item and make it visible.
-            list.setSelectedIndex(index);
-            list.ensureIndexIsVisible(index);
-        }
+			// Reset the text field.
+			employeeName.requestFocusInWindow();
+			employeeName.setText("");
 
-        //This method tests for string equality. You could certainly
-        //get more sophisticated about the algorithm.  For example,
-        //you might want to ignore white space and capitalization.
-        protected boolean alreadyInList(String name) {
-            return listModel.contains(name);
-        }
+			// Select the new item and make it visible.
+			list.setSelectedIndex(index);
+			list.ensureIndexIsVisible(index);
+		}
 
-        //Required by DocumentListener.
-        public void insertUpdate(DocumentEvent e) {
-            enableButton();
-        }
+		// This method tests for string equality. You could certainly
+		// get more sophisticated about the algorithm. For example,
+		// you might want to ignore white space and capitalization.
+		protected boolean alreadyInList(String name) {
+			return listModel.contains(name);
+		}
 
-        //Required by DocumentListener.
-        public void removeUpdate(DocumentEvent e) {
-            handleEmptyTextField(e);
-        }
+		// Required by DocumentListener.
+		public void insertUpdate(DocumentEvent e) {
+			enableButton();
+		}
 
-        //Required by DocumentListener.
-        public void changedUpdate(DocumentEvent e) {
-            if (!handleEmptyTextField(e)) {
-                enableButton();
-            }
-        }
+		// Required by DocumentListener.
+		public void removeUpdate(DocumentEvent e) {
+			handleEmptyTextField(e);
+		}
 
-        private void enableButton() {
-            if (!alreadyEnabled) {
-                button.setEnabled(true);
-            }
-        }
+		// Required by DocumentListener.
+		public void changedUpdate(DocumentEvent e) {
+			if (!handleEmptyTextField(e)) {
+				enableButton();
+			}
+		}
 
-        private boolean handleEmptyTextField(DocumentEvent e) {
-            if (e.getDocument().getLength() <= 0) {
-                button.setEnabled(false);
-                alreadyEnabled = false;
-                return true;
-            }
-            return false;
-        }
-    }
+		private void enableButton() {
+			if (!alreadyEnabled) {
+				button.setEnabled(true);
+			}
+		}
 
-    //This method is required by ListSelectionListener.
-    public void valueChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting() == false) {
+		private boolean handleEmptyTextField(DocumentEvent e) {
+			if (e.getDocument().getLength() <= 0) {
+				button.setEnabled(false);
+				alreadyEnabled = false;
+				return true;
+			}
+			return false;
+		}
+	}
 
-            if (list.getSelectedIndex() == -1) {
-            //No selection, disable fire button.
-                fireButton.setEnabled(false);
+	// This method is required by ListSelectionListener.
+	public void valueChanged(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting() == false) {
 
-            } else {
-            //Selection, enable the fire button.
-                fireButton.setEnabled(true);
-            }
-        }
-    }
+			if (list.getSelectedIndex() == -1) {
+				// No selection, disable fire button.
+				fireButton.setEnabled(false);
 
-    /**
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
-     * event-dispatching thread.
-     */
-    private static void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("ListDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			} else {
+				// Selection, enable the fire button.
+				fireButton.setEnabled(true);
+			}
+		}
+	}
 
-        //Create and set up the content pane.
-        JComponent newContentPane = new ListDemo();
-        newContentPane.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(newContentPane);
+	/**
+	 * Create the GUI and show it. For thread safety, this method should be
+	 * invoked from the event-dispatching thread.
+	 */
+	private static void createAndShowGUI() {
+		// Create and set up the window.
+		JFrame frame = new JFrame("ListDemo");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-    }
+		// Create and set up the content pane.
+		JComponent newContentPane = new ListDemo();
+		newContentPane.setOpaque(true); // content panes must be opaque
+		frame.setContentPane(newContentPane);
 
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
+		// Display the window.
+		frame.pack();
+		frame.setVisible(true);
+	}
+
+	public static void main(String[] args) {
+		// Schedule a job for the event-dispatching thread:
+		// creating and showing this application's GUI.
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				createAndShowGUI();
+			}
+		});
+	}
 }

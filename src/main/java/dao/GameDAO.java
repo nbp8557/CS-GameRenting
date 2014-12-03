@@ -11,10 +11,15 @@ import entities.Game;
 
 public class GameDAO extends CRUDManager<Game, Integer> {
 
+	public Session s;
+	
+	public GameDAO(Session session){
+		this.s = session;
+	}
+	
+	
 	@Override
 	public Game insert(Game g) {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		Session s = factory.getSession();
 		Transaction t = s.beginTransaction();
 		s.save(g);
 		t.commit();
@@ -26,8 +31,6 @@ public class GameDAO extends CRUDManager<Game, Integer> {
 
 	@Override
 	public Game select(Integer pk) {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		Session s = factory.getSession();
 		Game u = (Game) s.get(Game.class, pk);
 		s.close();
 		return u;
@@ -36,8 +39,6 @@ public class GameDAO extends CRUDManager<Game, Integer> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Game> selectAll() {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		Session s = factory.getSession();
 		List<Game> u = new ArrayList<Game>();
 		u = s.createCriteria(Game.class).list();
 		s.close();
@@ -46,8 +47,6 @@ public class GameDAO extends CRUDManager<Game, Integer> {
 
 	@Override
 	public Game delete(Game game) {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		Session s = factory.getSession();
 		Transaction transaction = s.beginTransaction();
 		s.delete(game);
 		transaction.commit();
@@ -59,9 +58,6 @@ public class GameDAO extends CRUDManager<Game, Integer> {
 
 	@Override
 	public Game update(Game game) {
-		SessionFactory factory = SessionFactory.getSessionFactory();
-		
-		Session s = factory.getSession();
 		Transaction transaction = s.beginTransaction();
 		s.update(game);
 		transaction.commit();
