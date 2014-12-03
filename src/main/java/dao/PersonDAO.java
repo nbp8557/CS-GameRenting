@@ -71,5 +71,4 @@ public class PersonDAO extends CRUDManager<Person, Integer> {
 		return resultPerson;
 	}
 	
-
 }
