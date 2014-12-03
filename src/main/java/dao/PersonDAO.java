@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 
 import entities.Person;
 
-public class PersonDAO extends CRUDManager<Person, Integer> {
+public class PersonDAO extends CRUDManager<Person, String> {
 
 	public Session s;
 
@@ -29,7 +29,7 @@ public class PersonDAO extends CRUDManager<Person, Integer> {
 	}
 
 	@Override
-	public Person select(Integer pk) {
+	public Person select(String pk) {
 		Person u = (Person) s.get(Person.class, pk);
 		s.close();
 		return u;

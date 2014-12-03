@@ -33,11 +33,7 @@ public class Person implements Serializable {
 
 	//bi-directional many-to-one association to Rental
 	@OneToMany(mappedBy="person1")
-	private List<Rental> rentals1;
-
-	//bi-directional many-to-one association to Rental
-	@OneToMany(mappedBy="person2")
-	private List<Rental> rentals2;
+	private List<Rental> rentals;
 
 	public Person() {
 	}
@@ -100,48 +96,26 @@ public class Person implements Serializable {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public List<Rental> getRentals1() {
-		return this.rentals1;
+	public List<Rental> getRentals() {
+		return this.rentals;
 	}
 
-	public void setRentals1(List<Rental> rentals1) {
-		this.rentals1 = rentals1;
+	public void setRentals(List<Rental> rentals) {
+		this.rentals = rentals;
 	}
 
-	public Rental addRentals1(Rental rentals1) {
-		getRentals1().add(rentals1);
-		rentals1.setPerson1(this);
+	public Rental addRentals(Rental rentals) {
+		getRentals().add(rentals);
+		rentals.setPerson(this);
 
-		return rentals1;
+		return rentals;
 	}
 
-	public Rental removeRentals1(Rental rentals1) {
-		getRentals1().remove(rentals1);
-		rentals1.setPerson1(null);
+	public Rental removeRentals(Rental rentals) {
+		getRentals().remove(rentals);
+		rentals.setPerson(null);
 
-		return rentals1;
-	}
-
-	public List<Rental> getRentals2() {
-		return this.rentals2;
-	}
-
-	public void setRentals2(List<Rental> rentals2) {
-		this.rentals2 = rentals2;
-	}
-
-	public Rental addRentals2(Rental rentals2) {
-		getRentals2().add(rentals2);
-		rentals2.setPerson2(this);
-
-		return rentals2;
-	}
-
-	public Rental removeRentals2(Rental rentals2) {
-		getRentals2().remove(rentals2);
-		rentals2.setPerson2(null);
-
-		return rentals2;
+		return rentals;
 	}
 
 }
