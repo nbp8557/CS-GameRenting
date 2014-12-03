@@ -16,6 +16,8 @@ public class Console implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int ConsoleID;
+	
 	private String consoleName;
 
 	//bi-directional many-to-one association to Game

@@ -30,8 +30,8 @@ public class ConsoleDAO extends CRUDManager<Console, Integer> {
 	}
 
 	@Override
-	public Console select(Integer pk) {
-		Console u = (Console) s.get(Console.class, pk);
+	public Console select(Integer consoleId) {
+		Console u = (Console) s.get(Console.class, consoleId);
 		s.close();
 		return u;
 	}
