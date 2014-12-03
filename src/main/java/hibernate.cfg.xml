@@ -27,6 +27,7 @@
    <mapping resource="Game.hbm.xml"/>
    <mapping resource="Person.hbm.xml"/>
    <mapping resource="Rental.hbm.xml"/>
+   <mapping resource="Eboard.hbm.xml"/>
 
 </session-factory>
 </hibernate-configuration>
