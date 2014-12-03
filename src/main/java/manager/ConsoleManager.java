@@ -7,7 +7,6 @@ import entities.Console;
 public class ConsoleManager {
 	private ConsoleDAO consoleDAO = new ConsoleDAO(SessionFactory.getSessionFactory().getSession());
 
-	//TODO implement this
 	public Console createConsole(String consoleName){
 		Console c = new Console(consoleName);
 		

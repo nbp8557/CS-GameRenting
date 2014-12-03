@@ -34,6 +34,10 @@ public class GameManager {
 		return gameDAO.update(g);	
 	}
 	
+	public Game updateGame(Game game){
+		return gameDAO.update(game);
+	}
+	
 	public Game selectGame(Integer gameID){
 		return gameDAO.select(gameID);				
 	}
