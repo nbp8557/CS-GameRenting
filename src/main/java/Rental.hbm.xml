@@ -13,8 +13,8 @@
 			<generator class="native" />
 		</id>
 
-      <property name="RentalTimestamp" column="RentalTimestamp" type="date"/>
-      <property name="ReturnTimestamp" column="ReturnTimestamp" type="date"/>
+      <property name="rentalTimestamp" column="RentalTimestamp" type="date"/>
+      <property name="returnTimestamp" column="ReturnTimestamp" type="date"/>
       <property name="GameID" column="GameID" type="int"/>
       <property name="EboardID" column="EboardID" type="int"/>   
       <property name="RentorID" column="RentorID" type="int"/>      

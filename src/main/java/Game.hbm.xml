@@ -4,18 +4,18 @@
  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-	<class name="entities.Person" table="Person">
+	<class name="entities.Game" table="Game">
 		<meta attribute="class-description">
-			This class contains the person detail.
+			This class contains the game detail.
 		</meta>
 
-		<id name="GameID" type="int" column="GameID">
+		<id name="gameID" type="int" column="GameID">
 			<generator class="native" />
 		</id>
 
-		<property name="Rentable" column="Rentable" type="byte" />
-		<property name="Name" column="Name" type="string" />
-		<property name="ConsoleName" column="ConsoleName" type="string" />
+		<property name="rentable" column="Rentable" type="byte" />
+		<property name="name" column="Name" type="string" />
+		<property name="consoleName" column="ConsoleName" type="string" />
 
 	</class>
 </hibernate-mapping>

@@ -13,12 +13,11 @@
 			<generator class="native" />
 		</id>
 
-		<property name="FirstName" column="FirstName" type="string" />
-		<property name="MiddleName" column="MiddleName" type="string" />
-		<property name="LastName" column="LastName" type="string" />
-		<property name="Email" column="LastName" type="string" />
-		<property name="PhoneNumber" column="PhoneNumber" type="string" />
-		<property name="EboardPosition" column="EboardPosition" type="string" />
+		<property name="firstName" column="FirstName" type="string" />
+		<property name="middleName" column="MiddleName" type="string" />
+		<property name="lastName" column="LastName" type="string" />
+		<property name="email" column="LastName" type="string" />
+		<property name="phoneNumber" column="PhoneNumber" type="string" />
 
 	</class>
 </hibernate-mapping>
