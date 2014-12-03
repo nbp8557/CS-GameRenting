@@ -26,4 +26,8 @@ public class ConsoleManager {
 	public void updateConsole(Console console){
 		consoleDAO.update(console);
 	}
+	
+	public Console selectConsole(Integer consoleID){
+		return consoleDAO.select(consoleID);
+	}
 }

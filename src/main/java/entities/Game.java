@@ -1,7 +1,9 @@
 package entities;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -20,11 +22,11 @@ public class Game implements Serializable {
 
 	private String name;
 
-	private byte rentable;
+	private boolean rentable;
 
 	//bi-directional many-to-one association to Console
 	@ManyToOne
-	@JoinColumn(name="ConsoleName")
+	@JoinColumn(name="ConsoleID")
 	private Console console;
 
 	//bi-directional many-to-one association to Rental
@@ -32,6 +34,12 @@ public class Game implements Serializable {
 	private List<Rental> rentals;
 
 	public Game() {
+	}
+
+	public Game(String gameName, boolean rentable, Console console) {
+		this.name = gameName;
+		this.rentable = rentable;
+		this.console = console;
 	}
 
 	public int getGameID() {
@@ -50,11 +58,11 @@ public class Game implements Serializable {
 		this.name = name;
 	}
 
-	public byte getRentable() {
+	public boolean getRentable() {
 		return this.rentable;
 	}
 
-	public void setRentable(byte rentable) {
+	public void setRentable(boolean rentable) {
 		this.rentable = rentable;
 	}
 
