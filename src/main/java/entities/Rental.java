@@ -14,6 +14,8 @@ import java.util.Date;
 @Entity
 @NamedQuery(name="Rental.findAll", query="SELECT r FROM Rental r")
 public class Rental implements Serializable {
+
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -29,7 +31,7 @@ public class Rental implements Serializable {
 	//bi-directional many-to-one association to Person
 	@ManyToOne
 	@JoinColumn(name="EboardID")
-	private Person person1;
+	private Eboard eboard;
 
 	//bi-directional many-to-one association to Game
 	@ManyToOne
@@ -39,16 +41,26 @@ public class Rental implements Serializable {
 	//bi-directional many-to-one association to Person
 	@ManyToOne
 	@JoinColumn(name="RentorID")
-	private Person person2;
+	private Person person;
 
 	public Rental() {
 	}
 
+	public Rental(Date rentalTimestamp, Date returnTimestamp, Eboard eboard,
+			Game game, Person person) {
+		super();
+		this.rentalTimestamp = rentalTimestamp;
+		this.returnTimestamp = returnTimestamp;
+		this.eboard = eboard;
+		this.game = game;
+		this.person = person;
+	}
+	
 	public int getRentalID() {
 		return this.RentalID;
 	}
 
-	public void setGameID(int rentalID) {
+	public void setRentalID(int rentalID) {
 		this.RentalID = rentalID;
 	}
 	
@@ -69,12 +81,12 @@ public class Rental implements Serializable {
 		this.returnTimestamp = returnTimestamp;
 	}
 
-	public Person getPerson1() {
-		return this.person1;
+	public Eboard getEboard() {
+		return this.eboard;
 	}
 
-	public void setPerson1(Person person1) {
-		this.person1 = person1;
+	public void setEboard(Eboard eboard) {
+		this.eboard = eboard;
 	}
 
 	public Game getGame() {
@@ -85,12 +97,12 @@ public class Rental implements Serializable {
 		this.game = game;
 	}
 
-	public Person getPerson2() {
-		return this.person2;
+	public Person getPerson() {
+		return this.person;
 	}
 
-	public void setPerson2(Person person2) {
-		this.person2 = person2;
+	public void setPerson(Person person) {
+		this.person = person;
 	}
 
 }
