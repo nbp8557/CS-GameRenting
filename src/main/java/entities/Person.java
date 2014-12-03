@@ -1,6 +1,8 @@
 package entities;
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -11,13 +13,13 @@ import java.util.List;
 @Entity
 @NamedQuery(name="Person.findAll", query="SELECT p FROM Person p")
 public class Person implements Serializable {
+	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private String RITUsername;
-
-	private String eboardPosition;
 
 	private String email;
 
@@ -40,20 +42,22 @@ public class Person implements Serializable {
 	public Person() {
 	}
 
+	public Person(String email, String firstName, String lastName,
+			String middleName, String phoneNumber) {
+		super();
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.middleName = middleName;
+		this.phoneNumber = phoneNumber;
+	}
+	
 	public String getRITUsername() {
 		return this.RITUsername;
 	}
 
 	public void setRITUsername(String RITUsername) {
 		this.RITUsername = RITUsername;
-	}
-
-	public String getEboardPosition() {
-		return this.eboardPosition;
-	}
-
-	public void setEboardPosition(String eboardPosition) {
-		this.eboardPosition = eboardPosition;
 	}
 
 	public String getEmail() {
