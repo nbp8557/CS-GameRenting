@@ -16,7 +16,7 @@ public class Console implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int ConsoleID;
+	private int consoleID;
 	
 	private String consoleName;
 
@@ -25,6 +25,10 @@ public class Console implements Serializable {
 	private List<Game> games;
 
 	public Console() {
+	}
+	
+	public Console(String name){
+		this.consoleName = name;
 	}
 
 	public String getConsoleName() {

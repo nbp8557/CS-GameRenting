@@ -8,11 +8,14 @@ public class ConsoleManager {
 	private ConsoleDAO consoleDAO = new ConsoleDAO(SessionFactory.getSessionFactory().getSession());
 
 	//TODO implement this
-	public Console createConsole(){
-		throw new UnsupportedOperationException(); 
+	public Console createConsole(String consoleName){
+		Console c = new Console(consoleName);
+		
+		c = consoleDAO.insert(c);
+		
+		return c;
 	}
 	
-	//TODO implement this
 	public void updateConsole(Integer consoleID, String consoleName){
 		Console c = consoleDAO.select(consoleID);
 		c.setConsoleName(consoleName);
