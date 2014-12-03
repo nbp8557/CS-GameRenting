@@ -8,9 +8,12 @@
 		<meta attribute="class-description">
 			This class contains the console detail.
 		</meta>
-
-		<id name="ConsoleName" type="string" column="ConsoleName">
+		
+		<id name="consoleID" type="int" column="ConsoleID">
+			<generator class="native" />
 		</id>
+		
+		<property name="consoleName" column="ConsoleName" type="string" />
 
 	</class>
 </hibernate-mapping>

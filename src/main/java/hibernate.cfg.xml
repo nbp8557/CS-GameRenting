@@ -13,7 +13,7 @@
 
    <!-- Assume test is the database name -->
    <property name="hibernate.connection.url">
-      jdbc:mysql://vm343f.se.rit.edu/test
+      jdbc:mysql://vm343f.se.rit.edu/GameRenting
    </property>
    <property name="hibernate.connection.username">
       adamrau
@@ -23,14 +23,10 @@
    </property>
 
    <!-- List of XML mapping files -->
-   <mapping resource="User.hbm.xml"/>
-   <mapping resource="RideEntry.hbm.xml"/>
-   <mapping resource="Vehicle.hbm.xml"/>
-   <mapping resource="Signup.hbm.xml"/>
-   <mapping resource="Group.hbm.xml"/>
-   <mapping resource="Location.hbm.xml"/>
-   <mapping resource="RideEntry_Group.hbm.xml"/>
-   <mapping resource="User_Group.hbm.xml"/>
+   <mapping resource="Console.hbm.xml"/>
+   <mapping resource="Game.hbm.xml"/>
+   <mapping resource="Person.hbm.xml"/>
+   <mapping resource="Rental.hbm.xml"/>
 
 </session-factory>
 </hibernate-configuration>
