@@ -24,7 +24,7 @@ public class ConsoleDAO extends CRUDManager<Console, Integer> {
 		s.save(u);
 		t.commit();
 		s.flush();
-		Console resultConsole = (Console) s.get(Console.class, u.getConsoleName());
+		Console resultConsole = (Console) s.get(Console.class, u.getconsoleID());
 		s.close();
 		return resultConsole;
 	}
@@ -51,7 +51,7 @@ public class ConsoleDAO extends CRUDManager<Console, Integer> {
 		s.delete(console);
 		transaction.commit();
 		s.flush();
-		console = (Console) s.get(Console.class, console.getConsoleName());
+		console = (Console) s.get(Console.class, console.getconsoleID());
 		s.close();
 		return console;
 	}
@@ -62,7 +62,7 @@ public class ConsoleDAO extends CRUDManager<Console, Integer> {
 		s.update(console);
 		transaction.commit();
 		s.flush();
-		Console resultConsole = (Console) s.get(Console.class, console.getConsoleName());
+		Console resultConsole = (Console) s.get(Console.class, console.getconsoleID());
 		s.close();
 		return resultConsole;
 	}
