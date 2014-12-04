@@ -13,13 +13,13 @@
 
    <!-- Assume test is the database name -->
    <property name="hibernate.connection.url">
-      jdbc:mysql://vm343f.se.rit.edu/GameRenting
+      jdbc:mysql://egsgamerenting.ccgvdoancm1x.us-east-1.rds.amazonaws.com/GameRenting
    </property>
    <property name="hibernate.connection.username">
-      adamrau
+      nbp8557
    </property>
    <property name="hibernate.connection.password">
-      Welcome123
+      gamerenting
    </property>
 
    <!-- List of XML mapping files -->
