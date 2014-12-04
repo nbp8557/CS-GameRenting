@@ -17,6 +17,6 @@
       <property name="returnTimestamp" column="ReturnTimestamp" type="date"/>
       <property name="GameID" column="GameID" type="int"/>
       <property name="EboardID" column="EboardID" type="int"/>   
-      <property name="RentorID" column="RentorID" type="int"/>      
+      <property name="RentorID" column="RentorID" type="string"/>      
    </class>
 </hibernate-mapping>

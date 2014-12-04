@@ -19,6 +19,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.Date;
 import java.util.List;
 
 public class MainScreen extends JPanel implements ActionListener {
@@ -44,11 +45,15 @@ public class MainScreen extends JPanel implements ActionListener {
 		}
 		gm = new GameManager();
 		
-		gm.selectGame(1);
-	
+		gm.selectGame(1);	
 		
 		RentalManager rm = new RentalManager();
 		
+		
+		Date d = new Date(new java.util.Date().getTime());
+		rm.createRental(d, 1, 1, "nbp8557");
+		
+		rm = new RentalManager();
 		List<Rental> r = rm.listRentals();
 		
 		for(Rental rent: r){
@@ -57,6 +62,8 @@ public class MainScreen extends JPanel implements ActionListener {
 		
 		PersonManager pm = new PersonManager();
 		System.out.print(pm.listPeople().get(0).getRITUsername());
+		
+		
 		
 		labelMainScreen = new JLabel("Main Screen");
 		add(labelMainScreen);

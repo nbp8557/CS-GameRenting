@@ -30,7 +30,7 @@ public class Rental implements Serializable {
 	
 	private int EboardID;
 	
-	private int RentorID;
+	private String RentorID;
 	
 	private int GameID;
 	
@@ -128,11 +128,11 @@ public class Rental implements Serializable {
 		GameID = gameID;
 	}
 
-	public int getRentorID() {
+	public String getRentorID() {
 		return RentorID;
 	}
 
-	public void setRentorID(int rentorID) {
+	public void setRentorID(String rentorID) {
 		RentorID = rentorID;
 	}
 

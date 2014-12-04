@@ -27,6 +27,18 @@ public class RentalManager {
 		return r;
 	}
 	
+	public Rental createRental(Date RentalTimestamp, Integer game, Integer eboard, String person){
+		Rental r = new Rental();
+		r.setEboardID(eboard);
+		r.setGameID(game);
+		r.setRentorID(person);
+		r.setRentalTimestamp(RentalTimestamp);
+		
+		r = rentalDAO.insert(r);
+		
+		return r;
+	}
+	
 	public Rental updateRental(Rental rental){
 		return rentalDAO.update(rental);
 	}
