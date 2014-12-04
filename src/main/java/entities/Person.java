@@ -18,7 +18,6 @@ public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	private String RITUsername;
 
 	private String email;
@@ -32,7 +31,7 @@ public class Person implements Serializable {
 	private String phoneNumber;
 
 	//bi-directional many-to-one association to Rental
-	@OneToMany(mappedBy="person1")
+	@OneToMany(mappedBy="person")
 	private List<Rental> rentals;
 
 	public Person() {

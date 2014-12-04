@@ -13,9 +13,9 @@
 			<generator class="native" />
 		</id>
 
-		<property name="rentable" column="Rentable" type="byte" />
+		<property name="rentable" column="Rentable" type="boolean" />
 		<property name="name" column="Name" type="string" />
-		<property name="consoleName" column="ConsoleName" type="string" />
+		<property name="consoleID" column="ConsoleID" type="int" />
 
 	</class>
 </hibernate-mapping>

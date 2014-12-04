@@ -25,9 +25,8 @@
    <!-- List of XML mapping files -->
    <mapping resource="Console.hbm.xml"/>
    <mapping resource="Game.hbm.xml"/>
-   <mapping resource="Person.hbm.xml"/>
    <mapping resource="Rental.hbm.xml"/>
-   <mapping resource="Eboard.hbm.xml"/>
+   <mapping resource="Person.hbm.xml"/>
 
 </session-factory>
 </hibernate-configuration>

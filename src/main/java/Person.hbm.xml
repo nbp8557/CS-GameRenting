@@ -9,14 +9,13 @@
 			This class contains the person detail.
 		</meta>
 
-		<id name="RITUsername" type="int" column="RITUsername">
-			<generator class="native" />
+		<id name="RITUsername" type="string" column="RITUsername">
 		</id>
 
 		<property name="firstName" column="FirstName" type="string" />
 		<property name="middleName" column="MiddleName" type="string" />
 		<property name="lastName" column="LastName" type="string" />
-		<property name="email" column="LastName" type="string" />
+		<property name="email" column="Email" type="string" />
 		<property name="phoneNumber" column="PhoneNumber" type="string" />
 
 	</class>

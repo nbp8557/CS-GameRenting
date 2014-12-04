@@ -23,6 +23,8 @@ public class Game implements Serializable {
 	private String name;
 
 	private boolean rentable;
+	
+	private int consoleID;
 
 	//bi-directional many-to-one association to Console
 	@ManyToOne
@@ -94,6 +96,14 @@ public class Game implements Serializable {
 		rental.setGame(null);
 
 		return rental;
+	}
+
+	public int getConsoleID() {
+		return consoleID;
+	}
+
+	public void setConsoleID(int consoleID) {
+		this.consoleID = consoleID;
 	}
 
 }

@@ -27,6 +27,14 @@ public class Console implements Serializable {
 	public Console() {
 	}
 	
+	public int getconsoleID(){
+		return this.consoleID;
+	}
+	
+	public void setconsoleID(int consoleID){
+		this.consoleID = consoleID;
+	}
+	
 	public Console(String name){
 		this.consoleName = name;
 	}

@@ -11,7 +11,7 @@ import entities.Game;
 
 public class GameDAO extends CRUDManager<Game, Integer> {
 
-	public Session s;
+	private Session s;
 	
 	public GameDAO(Session session){
 		this.s = session;

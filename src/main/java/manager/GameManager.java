@@ -15,11 +15,10 @@ public class GameManager {
 
 	public Game createGame(String gameName, boolean rentable, Integer consoleID) {
 		
-		ConsoleManager cm = new ConsoleManager();
-		
-		Console c = cm.selectConsole(consoleID);
-		
-		Game g = new Game(gameName, rentable, c);
+		Game g = new Game();
+		g.setName(gameName);
+		g.setRentable(rentable);
+		g.setConsoleID(consoleID);
 
 		g = gameDAO.insert(g);
 

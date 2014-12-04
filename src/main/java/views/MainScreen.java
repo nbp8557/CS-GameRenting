@@ -7,10 +7,19 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 
+import entities.Console;
+import entities.Game;
+import entities.Rental;
+import manager.ConsoleManager;
+import manager.GameManager;
+import manager.PersonManager;
+import manager.RentalManager;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 public class MainScreen extends JPanel implements ActionListener {
 
@@ -18,6 +27,37 @@ public class MainScreen extends JPanel implements ActionListener {
 	JLabel labelMainScreen;
 
 	public MainScreen() {
+		ConsoleManager cm = new ConsoleManager();
+		
+		List<Console> c = cm.listConsoles();
+		
+		for(Console console: c){
+			System.out.print(console.getConsoleName());
+		}
+		
+		GameManager gm = new GameManager();
+		
+		List<Game> g = gm.listGames();
+		for(Game game: g){
+			System.out.print(game.getName());
+			System.out.print(game.getRentable());
+		}
+		gm = new GameManager();
+		
+		gm.selectGame(1);
+	
+		
+		RentalManager rm = new RentalManager();
+		
+		List<Rental> r = rm.listRentals();
+		
+		for(Rental rent: r){
+			System.out.print(rent.getRentalTimestamp());
+		}
+		
+		PersonManager pm = new PersonManager();
+		System.out.print(pm.listPeople().get(0).getRITUsername());
+		
 		labelMainScreen = new JLabel("Main Screen");
 		add(labelMainScreen);
 

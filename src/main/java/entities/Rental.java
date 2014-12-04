@@ -27,6 +27,13 @@ public class Rental implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	private Date returnTimestamp;
+	
+	private int EboardID;
+	
+	private int RentorID;
+	
+	private int GameID;
+	
 
 	//bi-directional many-to-one association to Person
 	@ManyToOne
@@ -103,6 +110,30 @@ public class Rental implements Serializable {
 
 	public void setPerson(Person person) {
 		this.person = person;
+	}
+
+	public int getEboardID() {
+		return EboardID;
+	}
+
+	public void setEboardID(int eboardID) {
+		EboardID = eboardID;
+	}
+
+	public int getGameID() {
+		return GameID;
+	}
+
+	public void setGameID(int gameID) {
+		GameID = gameID;
+	}
+
+	public int getRentorID() {
+		return RentorID;
+	}
+
+	public void setRentorID(int rentorID) {
+		RentorID = rentorID;
 	}
 
 }
