@@ -28,23 +28,30 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class ManageGameConsole extends JPanel implements ListSelectionListener {
 
 	private static final String addString = "add";
 	private static final String editString = "edit";
 	private static final String deleteString = "delete";
+	private static final String refreshString = "refresh";
 	private JButton addButtonGame;
 	private JButton editButtonGame;
 	private JButton deleteButtonGame;
+	private JButton refreshButtonGame;
 	private JList listGame;
 	private DefaultListModel listModelGame;
 
 	private JButton addButtonConsole;
 	private JButton editButtonConsole;
 	private JButton deleteButtonConsole;
+	private JButton refreshButtonConsole;
 	private JList listConsole;
 	private DefaultListModel listModelConsole;
+	
+	private ArrayList<Integer> gameIds;
+	private ArrayList<Integer> consoleIds;
 
 	public ManageGameConsole() {
 		super(new GridLayout(1, 1));
@@ -65,6 +72,7 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 
 		panel.setLayout(new GridLayout(1, 1));
 		listModelGame = new DefaultListModel();
+		gameIds = new ArrayList<Integer>();
 		populateGameList(listModelGame);
 
 		listGame = new JList(listModelGame);
@@ -86,12 +94,17 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 		editButtonGame = new JButton(editString);
 		editButtonGame.setActionCommand(editString);
 		editButtonGame.addActionListener(new EditListenerGame());
+		
+		refreshButtonGame = new JButton(refreshString);
+		refreshButtonGame.setActionCommand(refreshString);
+		refreshButtonGame.addActionListener(new refreshListenerGame());
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
 		buttonPane.add(addButtonGame);
 		buttonPane.add(editButtonGame);
 		buttonPane.add(deleteButtonGame);
+		buttonPane.add(refreshButtonGame);
 		buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
 		panel.add(listScrollPane, BorderLayout.CENTER);
@@ -105,6 +118,7 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 
 		panel.setLayout(new GridLayout(1, 1));
 		listModelConsole = new DefaultListModel();
+		consoleIds = new ArrayList<Integer>();
 		populateConsoleList(listModelConsole);
 
 		listConsole = new JList(listModelConsole);
@@ -127,16 +141,21 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 		editButtonConsole = new JButton(editString);
 		editButtonConsole.setActionCommand(editString);
 		editButtonConsole.addActionListener(new EditListenerConsole());
+		
+		refreshButtonConsole = new JButton(refreshString);
+		refreshButtonConsole.setActionCommand(refreshString);
+		refreshButtonConsole.addActionListener(new refreshListenerConsole());
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
 		buttonPane.add(addButtonConsole);
 		buttonPane.add(editButtonConsole);
 		buttonPane.add(deleteButtonConsole);
+		buttonPane.add(refreshButtonConsole);
 		buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-		panel.add(listScrollPane, BorderLayout.CENTER);
-		panel.add(buttonPane, BorderLayout.PAGE_END);
+		panel.add(listScrollPane);
+		panel.add(buttonPane);
 
 		return panel;
 	}
@@ -183,7 +202,9 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 			int[] arr = listGame.getSelectedIndices();
 			int index = listGame.getSelectedIndex();
 			for (int i = 0; i < arr.length; i++) {
+				removeGameFromDatabase(gameIds.get(arr[i]));
 				listModelGame.remove(arr[i]);
+				gameIds.remove(arr[i]);
 				for (int k = i; k < arr.length; k++) {
 					if (arr[i] < arr[k]) {
 						arr[k] = arr[k] - 1;
@@ -192,7 +213,7 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 			}
 			int size = listModelGame.getSize();
 
-			if (size == 0) { // Nobody's left, disable firing.
+			if (size == 0) { 
 				deleteButtonGame.setEnabled(false);
 				editButtonGame.setEnabled(false);
 			} else { // Select an index.
@@ -206,14 +227,21 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 			}
 		}
 	}
-
+	public void removeGameFromDatabase(int key)
+	{
+		
+	}
+	public void removeConsoleFromDatabase(int key)
+	{
+		
+	}
 	class EditListenerGame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// deleteButton.setEnabled(false);
 			// editButton.setEnabled(false);
 			// addButton.setEnabled(false);
 			int index = listGame.getSelectedIndex();
-			startGameRegistration("key");
+			startGameRegistration(""+gameIds.get(index));
 			// startRegistration(listModelGame.getElementAt(index).toString());
 			/*
 			 * open and wait for edit/add window
@@ -233,6 +261,23 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 			 */
 		}
 	}
+	
+	class refreshListenerGame implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			listModelGame.clear();
+			gameIds.clear();
+			
+			populateGameList(listModelGame);
+		}
+	}
+	class refreshListenerConsole implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			listModelConsole.clear();
+			consoleIds.clear();
+			
+			populateConsoleList(listModelConsole);
+		}
+	}
 
 	class DeleteListenerConsole implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -240,7 +285,9 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 			int[] arr = listConsole.getSelectedIndices();
 			int index = listConsole.getSelectedIndex();
 			for (int i = 0; i < arr.length; i++) {
+				removeConsoleFromDatabase(consoleIds.get(arr[i]));
 				listModelConsole.remove(arr[i]);
+				consoleIds.remove(arr[i]);
 				for (int k = i; k < arr.length; k++) {
 					if (arr[i] < arr[k]) {
 						arr[k] = arr[k] - 1;
@@ -270,7 +317,7 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 			// editButton.setEnabled(false);
 			// addButton.setEnabled(false);
 			int index = listConsole.getSelectedIndex();
-			startConsoleRegistration("key");
+			startGameRegistration(""+consoleIds.get(index));
 			// startRegistration(listModelConsole.getElementAt(index).toString());
 			/*
 			 * open and wait for edit/add window
@@ -294,16 +341,32 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 	public void populateGameList(DefaultListModel dlm) {
 		// this would be the point where the database comes in
 		dlm.addElement("game1");
+		gameIds.add(new Integer(1));//key
+		
 		dlm.addElement("game2");
+		gameIds.add(new Integer(2));//key
+		
 		dlm.addElement("game3");
+		gameIds.add(new Integer(3));//key
+		
 		dlm.addElement("game4");
+		gameIds.add(new Integer(4));//key
+		
 		dlm.addElement("game5");
+		gameIds.add(new Integer(5));//key
+		
+		dlm.addElement("game6");
+		gameIds.add(new Integer(6));//key
 	}
 
 	public void populateConsoleList(DefaultListModel dlm) {
 		// this would be the point where the database comes in
 		dlm.addElement("Console1");
+		consoleIds.add(new Integer(1));//key
+		
 		dlm.addElement("Console2");
+		consoleIds.add(new Integer(2));//key
+		
 	}
 
 	private void startGameRegistration(String str) {
@@ -317,24 +380,21 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 	}
 
 	static void createAndShowGUI() {
-		// Create and set up the window.
-		JFrame frame = new JFrame("TabbedPaneDemo");
+		
+		JFrame frame = new JFrame("Manage games and consoles");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		// Add content to the window.
 		frame.add(new ManageGameConsole(), BorderLayout.CENTER);
+		
+		frame.setPreferredSize(new Dimension(600, 200));
 
-		// Display the window.
 		frame.pack();
 		frame.setVisible(true);
 	}
 
 	public static void main(String[] args) {
-		// Schedule a job for the event dispatch thread:
-		// creating and showing this application's GUI.
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				// Turn off metal's use of bold fonts
 				UIManager.put("swing.boldMetal", Boolean.FALSE);
 				createAndShowGUI();
 			}

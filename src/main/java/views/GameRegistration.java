@@ -31,6 +31,9 @@ public class GameRegistration extends JPanel implements ActionListener,
 	static String strName;
 	static String strRentable;
 	static String strConsole;
+	
+	static int argKey;
+	static boolean rentable;
 
 	static JFrame frame;
 
@@ -61,7 +64,7 @@ public class GameRegistration extends JPanel implements ActionListener,
 		listConsoles.setPreferredSize(new Dimension(253, 30));
 
 		checkRentable = new JCheckBox("     ");
-		checkRentable.setSelected(true);
+		checkRentable.setSelected(rentable);
 		checkRentable.addItemListener(this);
 
 		buttonSubmit = new JButton("Submit/Update");
@@ -137,15 +140,19 @@ public class GameRegistration extends JPanel implements ActionListener,
 
 	private static boolean retrieveEditInformation(String str) {
 		if (str != null && !str.isEmpty() && !str.equals("")) {
+			argKey = Integer.parseInt(str);
 			/*
 			 * the string that goes here is the key that it will use to populate
 			 * the textfields
 			 */
+			rentable = false; // <-- change
+			
 			strName = "random";
 
 			return true;
 		}
-
+		rentable = false;
+		
 		return false;
 	}
 

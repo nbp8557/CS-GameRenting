@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class Return extends JPanel implements ActionListener {
 	protected JButton buttonReturn, buttonCancel;
@@ -19,7 +20,9 @@ public class Return extends JPanel implements ActionListener {
 
 	String[] strsMembers;
 	String[] strsGames;
-
+	ArrayList<String> 	keysMembers;
+	ArrayList<Integer>	keysGames;
+	
 	static JFrame frame;
 	JComboBox listMembers;
 	JComboBox listGames;
@@ -41,7 +44,9 @@ public class Return extends JPanel implements ActionListener {
 		buttonCancel.setActionCommand("Cancel");
 		buttonCancel.setPreferredSize(new Dimension(145, 30));
 		buttonCancel.addActionListener(this);
-
+		
+		keysMembers = new ArrayList<String>();
+		keysGames = new ArrayList<Integer>();
 		setStringArrays();
 
 		listMembers = new JComboBox(strsMembers);
@@ -69,22 +74,57 @@ public class Return extends JPanel implements ActionListener {
 		 */
 
 		// testing code, comment out or delete when no longer relevant
-		String[] tempMembers = { "john doe", "jane doe", "billy bob",
-				"that guy", "other guy" };
-		strsMembers = tempMembers;
+		ArrayList<String> tempMembers = new ArrayList<String>();
+		
+		tempMembers.add("john doe");
+		keysMembers.add("abc123");
+		
+		tempMembers.add("jane doe");
+		keysMembers.add("abc456");
+		
+		tempMembers.add("billy bob");
+		keysMembers.add("abc789");
+		
+		tempMembers.add("that guy");
+		keysMembers.add("def123");
+		
+		tempMembers.add("other guy");
+		keysMembers.add("def456");
+		
+		strsMembers = new String[tempMembers.size()];
+		strsMembers = tempMembers.toArray(strsMembers);
 
-		String[] tempGames = { "superman 64", "earthworm jim", "E.T. SNES" };
-		strsGames = tempGames;
+		ArrayList<String> tempGames = new ArrayList<String>();
+		
+		tempGames.add("superman 64");
+		keysGames.add(1);
+		
+		tempGames.add("earthworm jim");
+		keysGames.add(2);
+		
+		tempGames.add("lemmings");
+		keysGames.add(3);
+		
+		strsGames = new String[tempGames.size()];
+		strsGames = tempGames.toArray(strsGames);
 		// testing code, comment out or delete when no longer relevant
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if ("Return".equals(e.getActionCommand())) {
+		if ("Return".equals(e.getActionCommand())) 
+		{
 			System.out.println("Return");
-		} else if ("Cancel".equals(e.getActionCommand())) {
+			//do database work here
+			System.out.println(keysMembers.get(listMembers.getSelectedIndex()));
+			System.out.println(keysGames.get(listGames.getSelectedIndex()));
+		} 
+		else if ("Cancel".equals(e.getActionCommand())) 
+		{
 			System.out.println("Cancel");
 			frame.dispose();
-		} else {
+		} 
+		else 
+		{
 			JComboBox cb = (JComboBox) e.getSource();
 			String slct = (String) cb.getSelectedItem();
 			System.out.println(slct);

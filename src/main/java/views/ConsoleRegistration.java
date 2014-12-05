@@ -27,6 +27,7 @@ public class ConsoleRegistration extends JPanel implements ActionListener {
 	static String strName;
 	JTextField fieldName;
 	static JFrame frame;
+	static int argKey;
 
 	public ConsoleRegistration() {
 		super(new GridBagLayout());
@@ -78,6 +79,7 @@ public class ConsoleRegistration extends JPanel implements ActionListener {
 
 	private static boolean retrieveEditInformation(String str) {
 		if (str != null && !str.isEmpty() && !str.equals("")) {
+			argKey = Integer.parseInt(str);
 			/*
 			 * the string that goes here is the key that it will use to populate
 			 * the textfields

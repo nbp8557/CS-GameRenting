@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class Renting extends JPanel implements ActionListener {
 	protected JButton buttonRent, buttonCancel;
@@ -22,6 +23,16 @@ public class Renting extends JPanel implements ActionListener {
 	String[] strsConsoles;
 	String[] strsGames;
 	String[] strsEboardMembers;
+	
+	ArrayList<String> 	keysMembers;
+	ArrayList<Integer>	keysConsoles;
+	ArrayList<Integer>	keysGames;
+	ArrayList<String> 	keysEboardMembers;
+	
+	JComboBox listMembers;
+	JComboBox listConsoles;
+	JComboBox listGames;
+	JComboBox listEboardMembers;
 
 	static JFrame frame;
 
@@ -50,21 +61,26 @@ public class Renting extends JPanel implements ActionListener {
 		buttonCancel.setPreferredSize(new Dimension(145, 30));
 		buttonCancel.addActionListener(this);
 
+		keysMembers = new ArrayList<String>();
+		keysConsoles = new ArrayList<Integer>();
+		keysGames = new ArrayList<Integer>();
+		keysEboardMembers = new ArrayList<String>();
+		
 		setStringArrays();
 
-		JComboBox listMembers = new JComboBox(strsMembers);
+		listMembers = new JComboBox(strsMembers);
 		listMembers.addActionListener(this);
 		listMembers.setPreferredSize(new Dimension(340, 30));
 
-		JComboBox listConsoles = new JComboBox(strsConsoles);
+		listConsoles = new JComboBox(strsConsoles);
 		listConsoles.addActionListener(this);
 		listConsoles.setPreferredSize(new Dimension(340, 30));
 
-		JComboBox listGames = new JComboBox(strsGames);
+		listGames = new JComboBox(strsGames);
 		listGames.addActionListener(this);
 		listGames.setPreferredSize(new Dimension(353, 30));
 
-		JComboBox listEboardMembers = new JComboBox(strsEboardMembers);
+		listEboardMembers = new JComboBox(strsEboardMembers);
 		listEboardMembers.addActionListener(this);
 		listEboardMembers.setPreferredSize(new Dimension(295, 30));
 
@@ -92,28 +108,91 @@ public class Renting extends JPanel implements ActionListener {
 		 */
 
 		// testing code, comment out or delete when no longer relevant
-		String[] tempMembers = { "john doe", "jane doe", "billy bob",
-				"that guy", "other guy" };
-		strsMembers = tempMembers;
-
-		String[] tempConsoles = { "snes", "genesis", "microwave", "toaster" };
-		strsConsoles = tempConsoles;
-
-		String[] tempGames = { "superman 64", "earthworm jim", "E.T. SNES" };
-		strsGames = tempGames;
-
-		String[] tempEboardMembers = { "tam", "tim", "tom" };
-		strsEboardMembers = tempEboardMembers;
+		
+		ArrayList<String> tempMembers = new ArrayList<String>();
+		
+		tempMembers.add("john doe");
+		keysMembers.add("abc123");
+		
+		tempMembers.add("jane doe");
+		keysMembers.add("abc456");
+		
+		tempMembers.add("billy bob");
+		keysMembers.add("abc789");
+		
+		tempMembers.add("that guy");
+		keysMembers.add("def123");
+		
+		tempMembers.add("other guy");
+		keysMembers.add("def456");
+		
+		strsMembers = new String[tempMembers.size()];
+		strsMembers = tempMembers.toArray(strsMembers);
+		
+		ArrayList<String> tempConsoles = new ArrayList<String>();
+		
+		tempConsoles.add("snes");
+		keysConsoles.add(1);
+		
+		tempConsoles.add("genesis");
+		keysConsoles.add(2);
+		
+		tempConsoles.add("microwave");
+		keysConsoles.add(3);
+		
+		tempConsoles.add("toaster");
+		keysConsoles.add(4);
+		
+		strsConsoles = new String[tempConsoles.size()];
+		strsConsoles = tempConsoles.toArray(strsConsoles);
+		
+		ArrayList<String> tempGames = new ArrayList<String>();
+		
+		tempGames.add("superman 64");
+		keysGames.add(1);
+		
+		tempGames.add("earthworm jim");
+		keysGames.add(2);
+		
+		tempGames.add("lemmings");
+		keysGames.add(3);
+		
+		strsGames = new String[tempGames.size()];
+		strsGames = tempGames.toArray(strsGames);
+		
+		ArrayList<String> tempEboardMembers = new ArrayList<String>();
+		
+		tempEboardMembers.add("tam");
+		keysEboardMembers.add("sdf3557");
+		
+		tempEboardMembers.add("tim");
+		keysEboardMembers.add("abt0265");
+		
+		tempEboardMembers.add("tom");
+		keysEboardMembers.add("lwn3266");
+		
+		strsEboardMembers = new String[tempEboardMembers.size()];
+		strsEboardMembers = tempEboardMembers.toArray(strsEboardMembers);
 		// testing code, comment out or delete when no longer relevant
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if ("Rent".equals(e.getActionCommand())) {
+		if ("Rent".equals(e.getActionCommand())) 
+		{
 			System.out.println("Rent");
-		} else if ("Cancel".equals(e.getActionCommand())) {
+			//do database work here
+			System.out.println(keysMembers.get(listMembers.getSelectedIndex()));
+			System.out.println(keysConsoles.get(listConsoles.getSelectedIndex()));
+			System.out.println(keysGames.get(listGames.getSelectedIndex()));
+			System.out.println(keysEboardMembers.get(listEboardMembers.getSelectedIndex()));
+		} 
+		else if ("Cancel".equals(e.getActionCommand())) 
+		{
 			System.out.println("Cancel");
 			frame.dispose();
-		} else {
+		} 
+		else 
+		{
 			JComboBox cb = (JComboBox) e.getSource();
 			String slct = (String) cb.getSelectedItem();
 			System.out.println(slct);

@@ -32,7 +32,7 @@ public class Registration extends JPanel implements ActionListener {
 	static String strEmail;
 	static String strPhone;
 	static String strPosition;
-	static String strKey;
+	static String argKey;
 
 	public Registration() {
 		super(new GridBagLayout());
@@ -135,7 +135,8 @@ public class Registration extends JPanel implements ActionListener {
 					&& !fieldLast.getText().equals("")
 					&& !fieldEmail.getText().equals("")
 					&& !fieldPhone.getText().equals("")
-					&& !fieldPosition.getText().equals("")) {
+					&& !fieldPosition.getText().equals("")) 
+			{
 				System.out.println(fieldRITusername.getText());
 				System.out.println(fieldFirst.getText());
 				System.out.println(fieldMiddle.getText());
@@ -161,13 +162,17 @@ public class Registration extends JPanel implements ActionListener {
 			 * the string that goes here is the key that it will use to populate
 			 * the textfields
 			 */
-			strRITusername = "random";
+			argKey = str;
+			
+			strRITusername = argKey;
 			strFirst = "info";
 			strMiddle = "here";
 			strLast = "to";
 			strEmail = "test";
 			strPhone = "this";
 			strPosition = "thing";
+			
+			
 
 			return true;
 		}

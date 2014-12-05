@@ -2,6 +2,7 @@ package views;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -14,14 +15,19 @@ public class MemberList extends JPanel implements ListSelectionListener {
 	private static final String addString = "add";
 	private static final String editString = "edit";
 	private static final String deleteString = "delete";
+	private static final String refreshString = "refresh";
 	private JButton addButton;
 	private JButton editButton;
 	private JButton deleteButton;
+	private JButton refreshButton;
+	
+	private ArrayList<String> memberKeys;
 
 	public MemberList() {
 		super(new BorderLayout());
 
 		listModel = new DefaultListModel();
+		memberKeys = new ArrayList<String>();
 		populateMemberList(listModel);
 
 		list = new JList(listModel);
@@ -43,6 +49,10 @@ public class MemberList extends JPanel implements ListSelectionListener {
 		editButton = new JButton(editString);
 		editButton.setActionCommand(editString);
 		editButton.addActionListener(new EditListener());
+		
+		refreshButton = new JButton(refreshString);
+		refreshButton.setActionCommand(refreshString);
+		refreshButton.addActionListener(new RefreshListener());
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
@@ -61,7 +71,9 @@ public class MemberList extends JPanel implements ListSelectionListener {
 			int[] arr = list.getSelectedIndices();
 			int index = list.getSelectedIndex();
 			for (int i = 0; i < arr.length; i++) {
+				removeFromDatabase(memberKeys.get(arr[i]));
 				listModel.remove(arr[i]);
+				memberKeys.remove(arr[i]);
 				for (int k = i; k < arr.length; k++) {
 					if (arr[i] < arr[k]) {
 						arr[k] = arr[k] - 1;
@@ -70,7 +82,7 @@ public class MemberList extends JPanel implements ListSelectionListener {
 			}
 			int size = listModel.getSize();
 
-			if (size == 0) { // Nobody's left, disable firing.
+			if (size == 0) {
 				deleteButton.setEnabled(false);
 				editButton.setEnabled(false);
 			} else { // Select an index.
@@ -84,7 +96,10 @@ public class MemberList extends JPanel implements ListSelectionListener {
 			}
 		}
 	}
-
+	public void removeFromDatabase(String key)
+	{
+		//System.out.println(key);
+	}
 	class EditListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// deleteButton.setEnabled(false);
@@ -92,10 +107,16 @@ public class MemberList extends JPanel implements ListSelectionListener {
 			// addButton.setEnabled(false);
 			int index = list.getSelectedIndex();
 
-			startRegistration(listModel.getElementAt(index).toString());
-			/*
-			 * open and wait for edit/add window
-			 */
+			startRegistration(memberKeys.get(index));
+		}
+	}
+	
+	class RefreshListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			memberKeys.clear();
+			listModel.clear();
+			
+			populateMemberList(listModel);
 		}
 	}
 
@@ -114,20 +135,25 @@ public class MemberList extends JPanel implements ListSelectionListener {
 	public void populateMemberList(DefaultListModel dlm) {
 		// this would be the point where the database comes in
 		dlm.addElement("Jane Doe");
+		memberKeys.add("key for Jane Doe");
+		
 		dlm.addElement("John Smith");
+		memberKeys.add("key for John Smith");
+		
 		dlm.addElement("Kathy Green");
+		memberKeys.add("key for Kathy Green");
 	}
 
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == false) {
 
 			if (list.getSelectedIndex() == -1) {
-				// No selection, disable fire button.
+				
 				deleteButton.setEnabled(false);
 				editButton.setEnabled(false);
 
 			} else {
-				// Selection, enable the fire button.
+				
 				deleteButton.setEnabled(true);
 				editButton.setEnabled(true);
 			}
