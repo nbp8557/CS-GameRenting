@@ -7,6 +7,17 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.*;
 
+import entities.Console;
+import entities.Game;
+import entities.Person;
+import entities.Rental;
+import manager.ConsoleManager;
+import manager.GameManager;
+import manager.PersonManager;
+import manager.RentalManager;
+
+import java.util.List;
+
 public class MemberList extends JPanel implements ListSelectionListener {
 
 	private JList list;
@@ -134,14 +145,21 @@ public class MemberList extends JPanel implements ListSelectionListener {
 
 	public void populateMemberList(DefaultListModel dlm) {
 		// this would be the point where the database comes in
-		dlm.addElement("Jane Doe");
-		memberKeys.add("key for Jane Doe");
 		
-		dlm.addElement("John Smith");
-		memberKeys.add("key for John Smith");
+		PersonManager pm = new PersonManager();
+		List<Person> p = pm.listPeople();
 		
-		dlm.addElement("Kathy Green");
-		memberKeys.add("key for Kathy Green");
+		for(Person person:p)
+		{
+			dlm.addElement(person.getFirstName() + " "
+							+ person.getMiddleName() + " "
+							+ person.getLastName());
+			
+			memberKeys.add(person.getRITUsername());
+		}
+		
+		//dlm.addElement("Jane Doe");
+		//memberKeys.add("key for Jane Doe");
 	}
 
 	public void valueChanged(ListSelectionEvent e) {

@@ -18,6 +18,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import entities.Console;
+import entities.Game;
+import entities.Person;
+import entities.Rental;
+import manager.ConsoleManager;
+import manager.GameManager;
+import manager.PersonManager;
+import manager.RentalManager;
+
+import java.util.List;
+
 public class Registration extends JPanel implements ActionListener {
 	protected JButton buttonSubmit, buttonCancel;
 	JLabel labelRITusername, labelFirst, labelMiddle, labelLast, labelEmail,
@@ -158,22 +169,27 @@ public class Registration extends JPanel implements ActionListener {
 
 	private static boolean retrieveEditInformation(String str) {
 		if (str != null && !str.isEmpty() && !str.equals("")) {
-			/*
-			 * the string that goes here is the key that it will use to populate
-			 * the textfields
-			 */
 			argKey = str;
 			
+			PersonManager pm = new PersonManager();
+			List<Person> p = pm.listPeople();
+			
+			for(Person person:p)
+			{
+				if(argKey == person.getRITUsername())
+				{
+					strFirst = person.getFirstName();
+					strMiddle = person.getMiddleName();
+					strLast = person.getLastName();
+					strEmail = person.getEmail();
+					strPhone = person.getPhoneNumber();
+					strPosition = "";
+					break;
+				}
+			}
+			
 			strRITusername = argKey;
-			strFirst = "info";
-			strMiddle = "here";
-			strLast = "to";
-			strEmail = "test";
-			strPhone = "this";
-			strPosition = "thing";
 			
-			
-
 			return true;
 		}
 

@@ -21,6 +21,15 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 
+import entities.Console;
+import entities.Game;
+import entities.Rental;
+import manager.ConsoleManager;
+import manager.GameManager;
+import manager.PersonManager;
+import manager.RentalManager;
+import java.util.List;
+
 public class GameRegistration extends JPanel implements ActionListener,
 		ItemListener {
 	protected JButton buttonSubmit, buttonCancel;
@@ -141,17 +150,22 @@ public class GameRegistration extends JPanel implements ActionListener,
 	private static boolean retrieveEditInformation(String str) {
 		if (str != null && !str.isEmpty() && !str.equals("")) {
 			argKey = Integer.parseInt(str);
-			/*
-			 * the string that goes here is the key that it will use to populate
-			 * the textfields
-			 */
-			rentable = false; // <-- change
 			
-			strName = "random";
+			GameManager gm = new GameManager();
+			List<Game> g = gm.listGames();
+			for(Game game: g)
+			{
+				if(argKey == game.getGameID())
+				{
+					rentable = game.getRentable();
+					strName = game.getName();
+					break;
+				}
+			}
 
 			return true;
 		}
-		rentable = false;
+		rentable = true;
 		
 		return false;
 	}

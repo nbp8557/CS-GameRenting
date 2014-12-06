@@ -14,6 +14,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import entities.Console;
+import entities.Game;
+import entities.Person;
+import entities.Rental;
+import manager.ConsoleManager;
+import manager.GameManager;
+import manager.PersonManager;
+import manager.RentalManager;
+
+import java.util.List;
+
 public class Return extends JPanel implements ActionListener {
 	protected JButton buttonReturn, buttonCancel;
 	JLabel labelMember, labelGame;
@@ -26,6 +37,9 @@ public class Return extends JPanel implements ActionListener {
 	static JFrame frame;
 	JComboBox listMembers;
 	JComboBox listGames;
+	
+	ArrayList<String> tempMembers;
+	ArrayList<String> tempGames;
 
 	public Return() {
 		labelMember = new JLabel("Member");
@@ -74,37 +88,32 @@ public class Return extends JPanel implements ActionListener {
 		 */
 
 		// testing code, comment out or delete when no longer relevant
-		ArrayList<String> tempMembers = new ArrayList<String>();
-		
-		tempMembers.add("john doe");
-		keysMembers.add("abc123");
-		
-		tempMembers.add("jane doe");
-		keysMembers.add("abc456");
-		
-		tempMembers.add("billy bob");
-		keysMembers.add("abc789");
-		
-		tempMembers.add("that guy");
-		keysMembers.add("def123");
-		
-		tempMembers.add("other guy");
-		keysMembers.add("def456");
-		
+		tempMembers = new ArrayList<String>();
+		PersonManager pm = new PersonManager();
+		List<Person> p = pm.listPeople();
+		for(Person person:p)
+		{
+			tempMembers.add(person.getFirstName() + " "
+							+ person.getMiddleName() + " "
+							+ person.getLastName());
+			
+			keysMembers.add(person.getRITUsername());
+		}
 		strsMembers = new String[tempMembers.size()];
 		strsMembers = tempMembers.toArray(strsMembers);
 
-		ArrayList<String> tempGames = new ArrayList<String>();
-		
-		tempGames.add("superman 64");
-		keysGames.add(1);
-		
-		tempGames.add("earthworm jim");
-		keysGames.add(2);
-		
-		tempGames.add("lemmings");
-		keysGames.add(3);
-		
+		tempGames = new ArrayList<String>();
+		List<Rental> r = pm.selectPerson(keysMembers.get(0)).getRentals();
+		for(Rental rental: r)
+		{
+			keysGames.add(rental.getGameID());
+			tempGames.add(rental.getGame().getName());
+		}
+		if(r.isEmpty())
+		{
+			keysGames.add(0);
+			tempGames.add("-empty-");
+		}
 		strsGames = new String[tempGames.size()];
 		strsGames = tempGames.toArray(strsGames);
 		// testing code, comment out or delete when no longer relevant
@@ -114,7 +123,12 @@ public class Return extends JPanel implements ActionListener {
 		if ("Return".equals(e.getActionCommand())) 
 		{
 			System.out.println("Return");
-			//do database work here
+			
+			if(!tempGames.get(listGames.getSelectedIndex()).equals("-empty-"))
+			{
+				//do database work here
+			}
+				
 			System.out.println(keysMembers.get(listMembers.getSelectedIndex()));
 			System.out.println(keysGames.get(listGames.getSelectedIndex()));
 		} 
@@ -122,13 +136,37 @@ public class Return extends JPanel implements ActionListener {
 		{
 			System.out.println("Cancel");
 			frame.dispose();
-		} 
+		}
+		else if ("comboBoxChanged".equals(e.getActionCommand())) 
+		{
+			refreshRentedList();
+		}
 		else 
 		{
 			JComboBox cb = (JComboBox) e.getSource();
 			String slct = (String) cb.getSelectedItem();
 			System.out.println(slct);
 		}
+	}
+	public void refreshRentedList()
+	{
+		keysGames.clear();
+		tempGames.clear();
+		tempGames = new ArrayList<String>();
+		PersonManager pm = new PersonManager();
+		List<Rental> r = pm.selectPerson(keysMembers.get(listMembers.getSelectedIndex())).getRentals();
+		for(Rental rental: r)
+		{
+			keysGames.add(rental.getGameID());
+			tempGames.add(rental.getGame().getName());
+		}
+		if(r.isEmpty())
+		{
+			keysGames.add(0);
+			tempGames.add("-empty-");
+		}
+		strsGames = new String[tempGames.size()];
+		strsGames = tempGames.toArray(strsGames);
 	}
 
 	public static void createAndShowGUI() {

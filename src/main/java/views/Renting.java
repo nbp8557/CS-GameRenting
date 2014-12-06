@@ -14,6 +14,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import entities.Console;
+import entities.Game;
+import entities.Person;
+import entities.Rental;
+import manager.ConsoleManager;
+import manager.GameManager;
+import manager.PersonManager;
+import manager.RentalManager;
+
+import java.util.List;
+
 public class Renting extends JPanel implements ActionListener {
 	protected JButton buttonRent, buttonCancel;
 	JLabel labelMember, labelConsole, labelGame, labelEboardMember,
@@ -102,78 +113,56 @@ public class Renting extends JPanel implements ActionListener {
 	}
 
 	public void setStringArrays() {
-		/*
-		 * we take the info from the databases and populate the string arrays
-		 * for the drop down menus here
-		 */
 
-		// testing code, comment out or delete when no longer relevant
 		
 		ArrayList<String> tempMembers = new ArrayList<String>();
-		
-		tempMembers.add("john doe");
-		keysMembers.add("abc123");
-		
-		tempMembers.add("jane doe");
-		keysMembers.add("abc456");
-		
-		tempMembers.add("billy bob");
-		keysMembers.add("abc789");
-		
-		tempMembers.add("that guy");
-		keysMembers.add("def123");
-		
-		tempMembers.add("other guy");
-		keysMembers.add("def456");
-		
+		ArrayList<String> tempEboardMembers = new ArrayList<String>();
+		PersonManager pm = new PersonManager();
+		List<Person> p = pm.listPeople();
+		for(Person person:p)
+		{
+			tempMembers.add(person.getFirstName() + " "
+							+ person.getMiddleName() + " "
+							+ person.getLastName());
+			
+			keysMembers.add(person.getRITUsername());
+			
+			tempEboardMembers.add(person.getFirstName() + " "
+					+ person.getMiddleName() + " "
+					+ person.getLastName());
+			
+			keysEboardMembers.add(person.getRITUsername());
+		}
 		strsMembers = new String[tempMembers.size()];
 		strsMembers = tempMembers.toArray(strsMembers);
 		
+		strsEboardMembers = new String[tempEboardMembers.size()];
+		strsEboardMembers = tempEboardMembers.toArray(strsEboardMembers);
+		
+		
 		ArrayList<String> tempConsoles = new ArrayList<String>();
-		
-		tempConsoles.add("snes");
-		keysConsoles.add(1);
-		
-		tempConsoles.add("genesis");
-		keysConsoles.add(2);
-		
-		tempConsoles.add("microwave");
-		keysConsoles.add(3);
-		
-		tempConsoles.add("toaster");
-		keysConsoles.add(4);
-		
+		ConsoleManager cm = new ConsoleManager();
+		List<Console> c = cm.listConsoles();
+		for(Console console: c){
+			tempConsoles.add(console.getConsoleName());
+			keysConsoles.add(console.getconsoleID());
+		}
 		strsConsoles = new String[tempConsoles.size()];
 		strsConsoles = tempConsoles.toArray(strsConsoles);
 		
 		ArrayList<String> tempGames = new ArrayList<String>();
-		
-		tempGames.add("superman 64");
-		keysGames.add(1);
-		
-		tempGames.add("earthworm jim");
-		keysGames.add(2);
-		
-		tempGames.add("lemmings");
-		keysGames.add(3);
-		
+		GameManager gm = new GameManager();
+		List<Game> g = gm.listGames();
+		for(Game game: g){
+			if(game.getRentable())
+			{
+				tempGames.add(game.getName());
+				keysGames.add(game.getGameID());
+			}
+		}
 		strsGames = new String[tempGames.size()];
 		strsGames = tempGames.toArray(strsGames);
 		
-		ArrayList<String> tempEboardMembers = new ArrayList<String>();
-		
-		tempEboardMembers.add("tam");
-		keysEboardMembers.add("sdf3557");
-		
-		tempEboardMembers.add("tim");
-		keysEboardMembers.add("abt0265");
-		
-		tempEboardMembers.add("tom");
-		keysEboardMembers.add("lwn3266");
-		
-		strsEboardMembers = new String[tempEboardMembers.size()];
-		strsEboardMembers = tempEboardMembers.toArray(strsEboardMembers);
-		// testing code, comment out or delete when no longer relevant
 	}
 
 	public void actionPerformed(ActionEvent e) {

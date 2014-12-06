@@ -21,6 +21,15 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 
+import entities.Console;
+import entities.Game;
+import entities.Rental;
+import manager.ConsoleManager;
+import manager.GameManager;
+import manager.PersonManager;
+import manager.RentalManager;
+import java.util.List;
+
 public class ConsoleRegistration extends JPanel implements ActionListener {
 	protected JButton buttonSubmit, buttonCancel;
 	static JLabel labelName;
@@ -80,11 +89,20 @@ public class ConsoleRegistration extends JPanel implements ActionListener {
 	private static boolean retrieveEditInformation(String str) {
 		if (str != null && !str.isEmpty() && !str.equals("")) {
 			argKey = Integer.parseInt(str);
-			/*
-			 * the string that goes here is the key that it will use to populate
-			 * the textfields
-			 */
-			strName = "random";
+			
+			//get name of console with argKey
+			ConsoleManager cm = new ConsoleManager();
+			
+			List<Console> c = cm.listConsoles();
+			
+			for(Console console: c)
+			{
+				if(argKey == console.getconsoleID())
+				{
+					strName = console.getConsoleName();
+					break;
+				}
+			}
 
 			return true;
 		}

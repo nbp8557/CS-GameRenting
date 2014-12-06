@@ -30,6 +30,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import entities.Console;
+import entities.Game;
+import entities.Rental;
+import manager.ConsoleManager;
+import manager.GameManager;
+import manager.PersonManager;
+import manager.RentalManager;
+import java.util.List;
+
 public class ManageGameConsole extends JPanel implements ListSelectionListener {
 
 	private static final String addString = "add";
@@ -339,33 +348,33 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 	}
 
 	public void populateGameList(DefaultListModel dlm) {
-		// this would be the point where the database comes in
-		dlm.addElement("game1");
-		gameIds.add(new Integer(1));//key
+
 		
-		dlm.addElement("game2");
-		gameIds.add(new Integer(2));//key
+		GameManager gm = new GameManager();
+		List<Game> g = gm.listGames();
+		for(Game game: g)
+		{
+			dlm.addElement(game.getName());
+			gameIds.add(new Integer(game.getGameID()));
+		}
 		
-		dlm.addElement("game3");
-		gameIds.add(new Integer(3));//key
-		
-		dlm.addElement("game4");
-		gameIds.add(new Integer(4));//key
-		
-		dlm.addElement("game5");
-		gameIds.add(new Integer(5));//key
-		
-		dlm.addElement("game6");
-		gameIds.add(new Integer(6));//key
+		//dlm.addElement("game1");
+		//gameIds.add(new Integer(1));//key
 	}
 
 	public void populateConsoleList(DefaultListModel dlm) {
 		// this would be the point where the database comes in
-		dlm.addElement("Console1");
-		consoleIds.add(new Integer(1));//key
 		
-		dlm.addElement("Console2");
-		consoleIds.add(new Integer(2));//key
+		ConsoleManager cm = new ConsoleManager();
+		List<Console> c = cm.listConsoles();
+		for(Console consoles: c)
+		{
+			dlm.addElement(consoles.getConsoleName());
+			gameIds.add(new Integer(consoles.getconsoleID()));
+		}
+		
+		//dlm.addElement("Console1");// examples
+		//consoleIds.add(new Integer(1));//key
 		
 	}
 
