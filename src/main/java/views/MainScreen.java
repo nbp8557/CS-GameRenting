@@ -28,41 +28,7 @@ public class MainScreen extends JPanel implements ActionListener {
 	JLabel labelMainScreen;
 
 	public MainScreen() {
-		ConsoleManager cm = new ConsoleManager();
-		
-		List<Console> c = cm.listConsoles();
-		
-		for(Console console: c){
-			System.out.print(console.getConsoleName());
-		}
-		
-		GameManager gm = new GameManager();
-		
-		List<Game> g = gm.listGames();
-		for(Game game: g){
-			System.out.print(game.getName());
-			System.out.print(game.getRentable());
-		}
-		gm = new GameManager();
-		
-		gm.selectGame(1);	
-		
-		RentalManager rm = new RentalManager();
-		
-		
-		Date d = new Date(new java.util.Date().getTime());
-		rm.createRental(d, 1, 1, "nbp8557");
-		
-		rm = new RentalManager();
-		List<Rental> r = rm.listRentals();
-		
-		for(Rental rent: r){
-			System.out.print(rent.getRentalTimestamp());
-		}
-		
-		PersonManager pm = new PersonManager();
-		System.out.print(pm.listPeople().get(0).getRITUsername());
-		
+	
 		
 		
 		labelMainScreen = new JLabel("Main Screen");
