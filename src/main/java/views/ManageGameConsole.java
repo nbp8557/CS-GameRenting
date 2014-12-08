@@ -370,7 +370,7 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 		for(Console consoles: c)
 		{
 			dlm.addElement(consoles.getConsoleName());
-			gameIds.add(new Integer(consoles.getconsoleID()));
+			consoleIds.add(new Integer(consoles.getconsoleID()));
 		}
 		
 		//dlm.addElement("Console1");// examples

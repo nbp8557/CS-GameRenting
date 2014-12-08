@@ -32,9 +32,9 @@ import java.util.List;
 public class Registration extends JPanel implements ActionListener {
 	protected JButton buttonSubmit, buttonCancel;
 	JLabel labelRITusername, labelFirst, labelMiddle, labelLast, labelEmail,
-			labelPhone, labelPosition;
+			labelPhone;//, labelPosition;
 	JTextField fieldRITusername, fieldFirst, fieldMiddle, fieldLast,
-			fieldEmail, fieldPhone, fieldPosition;
+			fieldEmail, fieldPhone;//, fieldPosition;
 	static JFrame frame;
 	static String strRITusername;
 	static String strFirst;
@@ -42,7 +42,7 @@ public class Registration extends JPanel implements ActionListener {
 	static String strLast;
 	static String strEmail;
 	static String strPhone;
-	static String strPosition;
+	//static String strPosition;
 	static String argKey;
 
 	public Registration() {
@@ -53,7 +53,7 @@ public class Registration extends JPanel implements ActionListener {
 		labelLast = new JLabel("Last name");
 		labelEmail = new JLabel("Email");
 		labelPhone = new JLabel("Phone Number");
-		labelPosition = new JLabel("Position");
+		//labelPosition = new JLabel("Position");
 
 		fieldRITusername = new JTextField(8);
 		fieldRITusername.setText(strRITusername);
@@ -73,8 +73,8 @@ public class Registration extends JPanel implements ActionListener {
 		fieldPhone = new JTextField(11);
 		fieldPhone.setText(strPhone);
 
-		fieldPosition = new JTextField(64);
-		fieldPosition.setText(strPosition);
+		//fieldPosition = new JTextField(64);
+		//fieldPosition.setText(strPosition);
 
 		buttonSubmit = new JButton("Submit/Update");
 		buttonSubmit.setVerticalTextPosition(AbstractButton.CENTER);
@@ -124,8 +124,8 @@ public class Registration extends JPanel implements ActionListener {
 		add(labelPhone);
 		add(fieldPhone, c);
 
-		add(labelPosition);
-		add(fieldPosition, c);
+		//add(labelPosition);
+		//add(fieldPosition, c);
 
 		add(textPane);
 		add(inputPane);
@@ -145,8 +145,8 @@ public class Registration extends JPanel implements ActionListener {
 					&& !fieldMiddle.getText().equals("")
 					&& !fieldLast.getText().equals("")
 					&& !fieldEmail.getText().equals("")
-					&& !fieldPhone.getText().equals("")
-					&& !fieldPosition.getText().equals("")) 
+					&& !fieldPhone.getText().equals(""))
+					//&& !fieldPosition.getText().equals("")) 
 			{
 				System.out.println(fieldRITusername.getText());
 				System.out.println(fieldFirst.getText());
@@ -154,10 +154,29 @@ public class Registration extends JPanel implements ActionListener {
 				System.out.println(fieldLast.getText());
 				System.out.println(fieldEmail.getText());
 				System.out.println(fieldPhone.getText());
-				System.out.println(fieldPosition.getText());
-				/*
-				 * do database work here
-				 */
+				//System.out.println(fieldPosition.getText());
+				
+				if(argKey != null && !argKey.isEmpty() && !argKey.equals(""))
+				{
+					PersonManager pm = new PersonManager();
+					pm.updatePerson(fieldRITusername.getText(), 
+									fieldFirst.getText(), 
+									fieldMiddle.getText(), 
+									fieldLast.getText(), 
+									fieldEmail.getText(), 
+									fieldPhone.getText());
+				}
+				else
+				{
+					PersonManager pm = new PersonManager();
+					pm.createPerson(fieldFirst.getText(), 
+									fieldMiddle.getText(), 
+									fieldLast.getText(), 
+									fieldEmail.getText(), 
+									fieldPhone.getText());
+				}
+				
+				
 			} else {
 				System.out.println("ERROR: Field is empty");
 			}
@@ -172,21 +191,14 @@ public class Registration extends JPanel implements ActionListener {
 			argKey = str;
 			
 			PersonManager pm = new PersonManager();
-			List<Person> p = pm.listPeople();
 			
-			for(Person person:p)
-			{
-				if(argKey == person.getRITUsername())
-				{
-					strFirst = person.getFirstName();
-					strMiddle = person.getMiddleName();
-					strLast = person.getLastName();
-					strEmail = person.getEmail();
-					strPhone = person.getPhoneNumber();
-					strPosition = "";
-					break;
-				}
-			}
+			Person person = pm.selectPerson(argKey);
+
+			strFirst = person.getFirstName();
+			strMiddle = person.getMiddleName();
+			strLast = person.getLastName();
+			strEmail = person.getEmail();
+			strPhone = person.getPhoneNumber();
 			
 			strRITusername = argKey;
 			

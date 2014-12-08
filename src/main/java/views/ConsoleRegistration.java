@@ -71,12 +71,22 @@ public class ConsoleRegistration extends JPanel implements ActionListener {
 		if ("Submit".equals(e.getActionCommand())) {
 			System.out.println("Submit:");
 
-			if (!fieldName.getText().equals("")) {
+			if (!fieldName.getText().equals("")) 
+			{
 				System.out.println(fieldName.getText());
 
-				/*
-				 * do database work here
-				 */
+				if(argKey < 0)
+				{
+					//we are not given a key, so this is an addition
+					ConsoleManager cm = new ConsoleManager();
+					cm.createConsole(fieldName.getText());
+				}
+				else
+				{
+					//we are given a key, so this is an update
+					ConsoleManager cm = new ConsoleManager();
+					cm.updateConsole(argKey, fieldName.getText());
+				}
 			} else {
 				System.out.println("ERROR: Field is empty");
 			}
@@ -92,20 +102,12 @@ public class ConsoleRegistration extends JPanel implements ActionListener {
 			
 			//get name of console with argKey
 			ConsoleManager cm = new ConsoleManager();
-			
-			List<Console> c = cm.listConsoles();
-			
-			for(Console console: c)
-			{
-				if(argKey == console.getconsoleID())
-				{
-					strName = console.getConsoleName();
-					break;
-				}
-			}
+			Console console = cm.selectConsole(argKey);
+			strName = console.getConsoleName();
 
 			return true;
 		}
+		argKey = -1;
 
 		return false;
 	}

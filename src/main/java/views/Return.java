@@ -103,7 +103,8 @@ public class Return extends JPanel implements ActionListener {
 		strsMembers = tempMembers.toArray(strsMembers);
 
 		tempGames = new ArrayList<String>();
-		List<Rental> r = pm.selectPerson(keysMembers.get(0)).getRentals();
+		PersonManager pm2 = new PersonManager();
+		List<Rental> r = pm2.selectPerson(keysMembers.get(0)).getRentals();
 		for(Rental rental: r)
 		{
 			keysGames.add(rental.getGameID());
@@ -126,7 +127,8 @@ public class Return extends JPanel implements ActionListener {
 			
 			if(!tempGames.get(listGames.getSelectedIndex()).equals("-empty-"))
 			{
-				//do database work here
+				RentalManager rm = new RentalManager();
+				rm.deleteRental(keysGames.get(listGames.getSelectedIndex()));
 			}
 				
 			System.out.println(keysMembers.get(listMembers.getSelectedIndex()));
@@ -157,7 +159,7 @@ public class Return extends JPanel implements ActionListener {
 		List<Rental> r = pm.selectPerson(keysMembers.get(listMembers.getSelectedIndex())).getRentals();
 		for(Rental rental: r)
 		{
-			keysGames.add(rental.getGameID());
+			keysGames.add(rental.getRentalID());
 			tempGames.add(rental.getGame().getName());
 		}
 		if(r.isEmpty())

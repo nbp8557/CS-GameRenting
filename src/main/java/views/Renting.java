@@ -12,13 +12,16 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import entities.Console;
+import entities.Eboard;
 import entities.Game;
 import entities.Person;
 import entities.Rental;
 import manager.ConsoleManager;
+import manager.EboardManager;
 import manager.GameManager;
 import manager.PersonManager;
 import manager.RentalManager;
@@ -38,7 +41,7 @@ public class Renting extends JPanel implements ActionListener {
 	ArrayList<String> 	keysMembers;
 	ArrayList<Integer>	keysConsoles;
 	ArrayList<Integer>	keysGames;
-	ArrayList<String> 	keysEboardMembers;
+	ArrayList<Integer> 	keysEboardMembers;
 	
 	JComboBox listMembers;
 	JComboBox listConsoles;
@@ -75,7 +78,7 @@ public class Renting extends JPanel implements ActionListener {
 		keysMembers = new ArrayList<String>();
 		keysConsoles = new ArrayList<Integer>();
 		keysGames = new ArrayList<Integer>();
-		keysEboardMembers = new ArrayList<String>();
+		keysEboardMembers = new ArrayList<Integer>();
 		
 		setStringArrays();
 
@@ -116,7 +119,7 @@ public class Renting extends JPanel implements ActionListener {
 
 		
 		ArrayList<String> tempMembers = new ArrayList<String>();
-		ArrayList<String> tempEboardMembers = new ArrayList<String>();
+		
 		PersonManager pm = new PersonManager();
 		List<Person> p = pm.listPeople();
 		for(Person person:p)
@@ -126,18 +129,11 @@ public class Renting extends JPanel implements ActionListener {
 							+ person.getLastName());
 			
 			keysMembers.add(person.getRITUsername());
-			
-			tempEboardMembers.add(person.getFirstName() + " "
-					+ person.getMiddleName() + " "
-					+ person.getLastName());
-			
-			keysEboardMembers.add(person.getRITUsername());
 		}
 		strsMembers = new String[tempMembers.size()];
 		strsMembers = tempMembers.toArray(strsMembers);
 		
-		strsEboardMembers = new String[tempEboardMembers.size()];
-		strsEboardMembers = tempEboardMembers.toArray(strsEboardMembers);
+		
 		
 		
 		ArrayList<String> tempConsoles = new ArrayList<String>();
@@ -163,17 +159,34 @@ public class Renting extends JPanel implements ActionListener {
 		strsGames = new String[tempGames.size()];
 		strsGames = tempGames.toArray(strsGames);
 		
+		ArrayList<String> tempEboardMembers = new ArrayList<String>();
+		EboardManager em = new EboardManager();
+		List<Eboard> e = em.listEboard();
+		for(Eboard eboard: e)
+		{
+			tempEboardMembers.add(eboard.getName());
+			keysEboardMembers.add(eboard.getEboardID());
+		}
+		strsEboardMembers = new String[tempEboardMembers.size()];
+		strsEboardMembers = tempEboardMembers.toArray(strsEboardMembers);
+		
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if ("Rent".equals(e.getActionCommand())) 
 		{
 			System.out.println("Rent");
-			//do database work here
-			System.out.println(keysMembers.get(listMembers.getSelectedIndex()));
+			
+			System.out.println();
 			System.out.println(keysConsoles.get(listConsoles.getSelectedIndex()));
 			System.out.println(keysGames.get(listGames.getSelectedIndex()));
 			System.out.println(keysEboardMembers.get(listEboardMembers.getSelectedIndex()));
+			
+			RentalManager rm = new RentalManager();
+			rm.createRental(new java.sql.Date(new java.util.Date().getTime()), 
+								keysGames.get(listGames.getSelectedIndex()), 
+								keysEboardMembers.get(listEboardMembers.getSelectedIndex()), 
+								keysMembers.get(listMembers.getSelectedIndex()));
 		} 
 		else if ("Cancel".equals(e.getActionCommand())) 
 		{

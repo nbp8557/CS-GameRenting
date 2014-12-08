@@ -28,6 +28,8 @@ import manager.ConsoleManager;
 import manager.GameManager;
 import manager.PersonManager;
 import manager.RentalManager;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameRegistration extends JPanel implements ActionListener,
@@ -46,6 +48,7 @@ public class GameRegistration extends JPanel implements ActionListener,
 
 	static JFrame frame;
 
+	ArrayList<Integer>	keysConsoles;
 	String[] strsConsoles;
 
 	JTextField fieldName;
@@ -130,9 +133,20 @@ public class GameRegistration extends JPanel implements ActionListener,
 				System.out.println(fieldName.getText());
 				System.out.println("" + boolRentable);
 				System.out.println(listConsoles.getSelectedItem().toString());
-				/*
-				 * do database work here
-				 */
+				
+				if(argKey < 0)
+				{
+					//we are not given a key, so this is an addition
+					GameManager gm = new GameManager();
+					gm.createGame(fieldName.getText(), boolRentable, keysConsoles.get(listConsoles.getSelectedIndex()));
+				}
+				else
+				{
+					//we are given a key, so this is an update
+					GameManager gm = new GameManager();
+					gm.updateGame(argKey, fieldName.getText(), boolRentable, keysConsoles.get(listConsoles.getSelectedIndex()));
+				}
+				
 			} else {
 				System.out.println("ERROR: Field is empty");
 			}
@@ -143,8 +157,19 @@ public class GameRegistration extends JPanel implements ActionListener,
 	}
 
 	public void setStringArray() {
-		String[] tempConsoles = { "console1", "console2" };
-		strsConsoles = tempConsoles;
+		
+		ArrayList<String> strArr = new ArrayList<String>();
+		keysConsoles = new ArrayList<Integer>();
+		ConsoleManager cm = new ConsoleManager();
+		List<Console> c = cm.listConsoles();
+		for(Console consoles: c)
+		{
+			strArr.add(consoles.getConsoleName());
+			keysConsoles.add(new Integer(consoles.getconsoleID()));
+		}
+		
+		strsConsoles = new String[strArr.size()];
+		strsConsoles = strArr.toArray(strsConsoles);
 	}
 
 	private static boolean retrieveEditInformation(String str) {
@@ -152,19 +177,14 @@ public class GameRegistration extends JPanel implements ActionListener,
 			argKey = Integer.parseInt(str);
 			
 			GameManager gm = new GameManager();
-			List<Game> g = gm.listGames();
-			for(Game game: g)
-			{
-				if(argKey == game.getGameID())
-				{
-					rentable = game.getRentable();
-					strName = game.getName();
-					break;
-				}
-			}
+			Game game = gm.selectGame(argKey);
+			
+			rentable = game.getRentable();
+			strName = game.getName();
 
 			return true;
 		}
+		argKey= -1;
 		rentable = true;
 		
 		return false;
