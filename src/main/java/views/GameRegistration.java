@@ -179,7 +179,14 @@ public class GameRegistration extends JPanel implements ActionListener,
 			GameManager gm = new GameManager();
 			Game game = gm.selectGame(argKey);
 			
-			rentable = game.getRentable();
+			if(game != null)
+			{
+				rentable = game.getRentable();
+			}
+			else
+			{
+				rentable = true;
+			}
 			strName = game.getName();
 
 			return true;
