@@ -47,6 +47,8 @@ public class Renting extends JPanel implements ActionListener {
 	JComboBox listConsoles;
 	JComboBox listGames;
 	JComboBox listEboardMembers;
+	
+	int pastKey = -1;
 
 	static JFrame frame;
 
@@ -125,7 +127,6 @@ public class Renting extends JPanel implements ActionListener {
 		for(Person person:p)
 		{
 			tempMembers.add(person.getFirstName() + " "
-							+ person.getMiddleName() + " "
 							+ person.getLastName());
 			
 			keysMembers.add(person.getRITUsername());
@@ -192,7 +193,15 @@ public class Renting extends JPanel implements ActionListener {
 		{
 			System.out.println("Cancel");
 			frame.dispose();
-		} 
+		}
+		else if ("comboBoxChanged".equals(e.getActionCommand())) 
+		{
+			if(pastKey != keysConsoles.get(listConsoles.getSelectedIndex()))
+			{
+				pastKey = keysConsoles.get(listConsoles.getSelectedIndex());
+				refreshGamesList();
+			}
+		}
 		else 
 		{
 			JComboBox cb = (JComboBox) e.getSource();
@@ -200,7 +209,31 @@ public class Renting extends JPanel implements ActionListener {
 			System.out.println(slct);
 		}
 	}
-
+	public void refreshGamesList()
+	{
+		keysGames.clear();
+		ArrayList<String>tempGames = new ArrayList<String>();
+		GameManager gm = new GameManager();
+		List<Game> g = gm.listGames();
+		
+		for(Game game : g)
+		{
+			if(game.getConsoleID() == keysConsoles.get(listConsoles.getSelectedIndex()))
+			{
+				tempGames.add(game.getName());
+				keysGames.add(game.getGameID());
+			}
+		}
+		listGames.removeAllItems();
+		for(String str : tempGames)
+		{
+			listGames.addItem(str);
+		}
+		listGames.repaint();
+		listGames.revalidate();
+		this.repaint();
+		this.revalidate();
+	}
 	public static void createAndShowGUI() {
 
 		// Create and set up the window.

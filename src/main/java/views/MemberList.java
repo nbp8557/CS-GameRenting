@@ -69,7 +69,7 @@ public class MemberList extends JPanel implements ListSelectionListener {
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
 		buttonPane.add(addButton);
 		buttonPane.add(editButton);
-		buttonPane.add(deleteButton);
+		//buttonPane.add(deleteButton);
 		buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
 		add(listScrollPane, BorderLayout.CENTER);
@@ -152,7 +152,6 @@ public class MemberList extends JPanel implements ListSelectionListener {
 		for(Person person:p)
 		{
 			dlm.addElement(person.getFirstName() + " "
-							+ person.getMiddleName() + " "
 							+ person.getLastName());
 			
 			memberKeys.add(person.getRITUsername());

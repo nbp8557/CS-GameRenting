@@ -40,6 +40,8 @@ public class Return extends JPanel implements ActionListener {
 	
 	ArrayList<String> tempMembers;
 	ArrayList<String> tempGames;
+	
+	String pastKey = "nothing";
 
 	public Return() {
 		labelMember = new JLabel("Member");
@@ -94,7 +96,6 @@ public class Return extends JPanel implements ActionListener {
 		for(Person person:p)
 		{
 			tempMembers.add(person.getFirstName() + " "
-							+ person.getMiddleName() + " "
 							+ person.getLastName());
 			
 			keysMembers.add(person.getRITUsername());
@@ -105,15 +106,19 @@ public class Return extends JPanel implements ActionListener {
 		tempGames = new ArrayList<String>();
 		PersonManager pm2 = new PersonManager();
 		List<Rental> r = pm2.selectPerson(keysMembers.get(0)).getRentals();
-		for(Rental rental: r)
-		{
-			keysGames.add(rental.getGameID());
-			tempGames.add(rental.getGame().getName());
-		}
-		if(r.isEmpty())
+		
+		if(r == null || r.isEmpty())
 		{
 			keysGames.add(0);
 			tempGames.add("-empty-");
+		}
+		else
+		{
+			for(Rental rental: r)
+			{
+				keysGames.add(rental.getGameID());
+				tempGames.add(rental.getGame().getName());
+			}
 		}
 		strsGames = new String[tempGames.size()];
 		strsGames = tempGames.toArray(strsGames);
@@ -141,7 +146,11 @@ public class Return extends JPanel implements ActionListener {
 		}
 		else if ("comboBoxChanged".equals(e.getActionCommand())) 
 		{
-			refreshRentedList();
+			if(pastKey != keysMembers.get(listMembers.getSelectedIndex()))
+			{
+				pastKey = keysMembers.get(listMembers.getSelectedIndex());
+				refreshRentedList();
+			}
 		}
 		else 
 		{
@@ -157,18 +166,28 @@ public class Return extends JPanel implements ActionListener {
 		tempGames = new ArrayList<String>();
 		PersonManager pm = new PersonManager();
 		List<Rental> r = pm.selectPerson(keysMembers.get(listMembers.getSelectedIndex())).getRentals();
-		for(Rental rental: r)
-		{
-			keysGames.add(rental.getRentalID());
-			tempGames.add(rental.getGame().getName());
-		}
-		if(r.isEmpty())
+		if(r == null || r.isEmpty())
 		{
 			keysGames.add(0);
 			tempGames.add("-empty-");
 		}
-		strsGames = new String[tempGames.size()];
-		strsGames = tempGames.toArray(strsGames);
+		else
+		{
+			for(Rental rental: r)
+			{
+				keysGames.add(rental.getRentalID());
+				tempGames.add(rental.getGame().getName());
+			}
+		}
+		listGames.removeAllItems();
+		for(String str : tempGames)
+		{
+			listGames.addItem(str);
+		}
+		listGames.repaint();
+		listGames.revalidate();
+		this.repaint();
+		this.revalidate();
 	}
 
 	public static void createAndShowGUI() {

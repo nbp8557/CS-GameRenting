@@ -113,6 +113,7 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 		buttonPane.add(addButtonGame);
 		buttonPane.add(editButtonGame);
 		buttonPane.add(deleteButtonGame);
+		deleteButtonGame.setEnabled(false);
 		buttonPane.add(refreshButtonGame);
 		buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
@@ -160,6 +161,7 @@ public class ManageGameConsole extends JPanel implements ListSelectionListener {
 		buttonPane.add(addButtonConsole);
 		buttonPane.add(editButtonConsole);
 		buttonPane.add(deleteButtonConsole);
+		deleteButtonConsole.setEnabled(false);
 		buttonPane.add(refreshButtonConsole);
 		buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
